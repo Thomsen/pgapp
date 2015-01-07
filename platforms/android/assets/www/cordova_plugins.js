@@ -22,5 +22,10 @@ module.exports.metadata =
     "org.apache.cordova.console": "0.2.12",
     "org.apache.cordova.device": "0.2.13"
 }
+=======
+module.exports = [];
+module.exports.metadata = 
+// TOP OF METADATA
+{}
 // BOTTOM OF METADATA
 });
