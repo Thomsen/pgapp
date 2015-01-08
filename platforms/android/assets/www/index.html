@@ -15,7 +15,7 @@
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <!-- cordova script (this will be a 404 during development) -->
+    <!-- cordova script (this will be a 404 during development) must be last -->
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
@@ -30,5 +30,18 @@
       <ion-content>
       </ion-content>
     </ion-pane>
+    
+    <ion-side-menus>
+	    <ion-side-menu-content>
+		    <ion-header-bar class="bar-dark">
+		      <h1 class="title">Todo</h1>
+		    </ion-header-bar>
+	    </ion-side-menu-content>
+	    <ion-side-menu side="left">
+		   <ion-header-bar class="bar-dark">
+		      <h1 class="title">Projects</h1>
+	       </ion-header-bar>
+	    </ion-side-menu>
+    </ion-side-menus>
   </body>
 </html>
