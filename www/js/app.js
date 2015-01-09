@@ -17,3 +17,40 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+  .controller('TodoCtrl', function($scope, $ionicModal, $ionicSideMenuDelegate) {
+   $scope.tasks = [
+     {title: "Activity"},
+     {title: "Service"},
+     {title: "Broadcast"},
+     {title: "ContentProvider"}
+   ];
+
+  $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
+    $scope.taskModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  $scope.newTask = function() {
+    $scope.taskModal.show();
+  };
+
+  $scope.createTask = function(task) {
+    $scope.tasks.push({
+      title: task.title
+    });
+    $scope.taskModal.hide();
+    task.title = "";
+  };
+
+  $scope.closeNewTask = function() {
+    $scope.taskModal.hide();
+  };
+
+  $scope.toggleProjects = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+})
+
