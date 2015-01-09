@@ -32,14 +32,14 @@
           <button class="button button-icon" ng-click="toggleProjects()">
             <i class="icon ion-navicon"></i>
           </button>
-          <h1 class="title">Todo</h1>
+          <h1 class="title">{{activeProject.title}}</h1>
           <button class="button button-icon" ng-click="newTask()">
             <i class="icon ion-compose" ></i>
           </button>
         </ion-header-bar>
-        <ion-content>
+        <ion-content scroll="false">
           <ion-list>
-            <ion-item ng-repeat="task in tasks">
+            <ion-item ng-repeat="task in activeProject.tasks">
               {{task.title}}
             </ion-item>
           </ion-list>
