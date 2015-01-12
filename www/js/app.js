@@ -5,18 +5,55 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic'])
 
-  .run(function($ionicPlatform) {
+  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location',
+    function($ionicPlatform, $ionicPopup, $rootScope, $location) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
-      if(window.cordova && window.cordova.plugins.Keyboard) {
-        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      }
+//      if(window.cordova && window.cordova.plugins.Keyboard) {
+//        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+//      }  // Cannot read property 'Keyboard'
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
+
+      alert("device already");
     });
-  })
+
+    $ionicPlatform.registerBackButtonAction(function(e) {
+      //e.preventDefault();
+      function showConfirm() {
+        var confirmPopup = $ionicPopup.confirm({
+          title: '<strong>退出应用?</strong>',
+          template: '你确定退出应用吗？',
+          okText: '退出',
+          cancelText: '取消'});
+
+        confirmPopup.then(function(res) {
+          if (res) {
+            console.log("confirmPopup exit ");
+//            navigator.app.exitApp();
+             ionic.Platform.exitApp();
+          } else {
+          }
+       });
+      }
+
+      console.log("location path ", $location.path())
+      showConfirm();
+      /*
+      if ($location.path() == '/index') {
+        showConfirm();
+      } else if ($rootScope.$viewHistory.backView) {
+        console.log('currentView:', $rootScope.$viewHistory.currentView);
+        $rootScope.$viewHistory.backView.go();
+      } else {
+        showConfirm();
+      }*/
+      return false;
+    }, 100);
+
+   }])
 
   .factory('Projects', function() {
     return  {
@@ -28,6 +65,7 @@ angular.module('starter', ['ionic'])
         return [];
       },
       save: function(projects) {
+        console.log('save project: ', projects);
         window.localStorage['projects'] = angular.toJson(projects);
       },
       newProject: function(projectTitle) {
