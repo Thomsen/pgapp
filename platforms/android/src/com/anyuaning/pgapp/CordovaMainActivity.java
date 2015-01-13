@@ -15,6 +15,9 @@ import java.util.concurrent.Executors;
 public class CordovaMainActivity extends Activity implements CordovaInterface {
 
     CordovaWebView mCordovaWebView;
+    private CordovaPlugin activityResultCallback;
+    private Object activityResultKeepRunning;
+    private boolean keepRunning;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +31,30 @@ public class CordovaMainActivity extends Activity implements CordovaInterface {
     
     @Override
     public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
-        // TODO Auto-generated method stub
-        
+        this.activityResultCallback = command;
+        this.activityResultKeepRunning = this.keepRunning;
+
+        // If multitasking turned on, then disable it for activities that return results
+        if (command != null) {
+            this.keepRunning = false;
+        }
+
+        // Start activity
+        super.startActivityForResult(intent, requestCode);
     }
 
     @Override
     public void setActivityResultCallback(CordovaPlugin plugin) {
-        // TODO Auto-generated method stub
-        
+        this.activityResultCallback = plugin;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        CordovaPlugin callback = this.activityResultCallback;
+        if (callback != null) {
+            callback.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -52,6 +71,11 @@ public class CordovaMainActivity extends Activity implements CordovaInterface {
     @Override
     public ExecutorService getThreadPool() {
         return Executors.newCachedThreadPool();
+        // 01-13 16:50:19.520: W/MediaProvider/DrmHelper(8346): not support DRM!
+        // 01-13 16:50:19.545: W/PluginManager(19594): THREAD WARNING: exec()
+        // call to Camera.takePicture blocked the main thread for 28ms. Plugin should use CordovaInterface.getThreadPool().
+        
+        // need implement start/set Activity Result Callback
     }
 
 }

@@ -11,12 +11,26 @@
     -->
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js" type="text/javascript"></script>
+
     <!-- cordova script (this will be a 404 during development) must be last -->
     <script src="cordova.js" type="text/javascript"></script>
+
     <!-- your app's js -->
     <script src="js/app.js" type="text/javascript"></script>
+    <script src="js/camera.js", type="text/javascript"></script>
+
+    <script type="text/javascript", charset="utf-8">
+      function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+      }
+      function onDeviceReady() {
+        console.log(navigator.camera);
+      }
+
+    </script>
+
   </head>
-  <body ng-app="starter" ng-controller="TodoCtrl">
+  <body onload="onLoad" ng-app="starter" ng-controller="TodoCtrl">
     <!--
     <ion-pane>
     <ion-header-bar class="bar-stable">
@@ -80,6 +94,8 @@
                 <button type="submit" class="button button-block button-positive">Create Task</button>
               </div>
             </form>
+            <button ng-click="getPhoto()", class="button button-block button-primary">Take Photo</button>
+            <img ng-src="{{lastPhoto}}", style="max-width: 100%" />
           </ion-content>
         </div>
       </script>

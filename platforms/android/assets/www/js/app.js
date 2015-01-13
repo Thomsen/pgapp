@@ -3,7 +3,11 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic', 'starter.services'])
+
+  .config(function($compileProvider) {
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+  })
 
   .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location',
     function($ionicPlatform, $ionicPopup, $rootScope, $location) {
@@ -83,7 +87,7 @@ angular.module('starter', ['ionic'])
     }
   })
 
-  .controller('TodoCtrl', function($scope, $ionicModal, $ionicSideMenuDelegate, Projects) {
+  .controller('TodoCtrl', function($scope, $ionicModal, $ionicSideMenuDelegate, Projects, Camera) {
     $scope.tasks = [
       {title: "Activity"},
       {title: "Service"},
@@ -147,5 +151,20 @@ angular.module('starter', ['ionic'])
     $scope.toggleProjects = function() {
       $ionicSideMenuDelegate.toggleLeft();
     };
+
+    $scope.getPhoto = function() {
+      Camera.getPicture().then(function(imageUri) {
+        console.log(imageUri);
+        $scope.lastPhoto = imageUri;
+      }, function(err) {
+        console.err(err);
+      }, {
+        quality: 75,
+        targetWidth: 320,
+        targetHeight: 320,
+        saveToPhotoAlbum: false
+      });
+    };
+
   })
 
