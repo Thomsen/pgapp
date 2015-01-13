@@ -12,7 +12,7 @@ angular.module('starter', ['ionic'])
       // for form inputs)
 //      if(window.cordova && window.cordova.plugins.Keyboard) {
 //        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-//      }
+//      }  // Cannot read property 'Keyboard'
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
