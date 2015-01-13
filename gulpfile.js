@@ -26,6 +26,11 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
+gulp.task('html', function() {
+  gulp.src('./www/*.html')
+    .pipe(connect.reload());
+});
+
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
   gulp.watch(['./www/*.html'], ['html']);
