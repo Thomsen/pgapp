@@ -18,7 +18,18 @@ angular.module('starter.services', [])
     }
   }])
 
-  .factory('Projects', function() {
+  .factory('Projects', ['$q', function($q) {
+    var openReq = window.indexedDB.open("projects");
+    openReq.onupgradeneeded = function(event) {
+      var db = event.target.result;
+      var store = db.createObjectStore("project", {autoIncrement: true});
+      var titleIndex = store.createIndex("by_title", "title", {unique: true});
+
+    }
+    openReq.onsuccess = function(event) {
+    }
+    openReq.onerror = function(event) {
+    }
     return  {
       all: function() {
         var projectString = window.localStorage['projects'];
@@ -27,9 +38,37 @@ angular.module('starter.services', [])
         }
         return [];
       },
+      openReqAll: function() {
+        var q = $q.defer();
+        var i_project = openReq.result.transaction("project", "readonly");
+        var store = i_project.objectStore("project");
+        var index = store.index("by_title");
+        var request = index.openCursor();
+        request.onsuccess = function() {
+          var cursor = request.result;
+          var projects = [];
+          if (cursor) {
+            //report(cursor.value.title);
+            projects.push(cursor.values);
+            cursor.continue();
+          } else {
+            // report(null);
+          }
+          q.resolve(projects);
+        }
+        return q.promise;
+      },
       save: function(projects) {
         console.log('save project: ', projects);
-        window.localStorage['projects'] = angular.toJson(projects);
+        window.localStorage['projects'] = angular.toJson(projects); // localstorage file
+      },
+      openReqSave: function(projects) {
+        var i_project = openReq.result.transaction("project", "readwrite");
+        var store = i_project.objectStore("project");
+        store.put(angular.toJson(projects));
+        i_project.oncomplete = function() {
+          console.log("project saved");
+        }
       },
       newProject: function(projectTitle) {
         return {
@@ -38,10 +77,10 @@ angular.module('starter.services', [])
         };
       },
       getLastActiveIndex: function() {
-        return parseInt(window.localStorage['lastActiveProjects']) || 0;
+        //return parseInt(window.localStorage['lastActiveProjects']) || 0;
       },
       setLastActiveIndex: function(index) {
-        window.localStorage['lastActiveProject'] = index;
+        //window.localStorage['lastActiveProject'] = index;
       }
     }
-  })
+  }])
