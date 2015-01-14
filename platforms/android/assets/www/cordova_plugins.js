@@ -27,12 +27,18 @@ module.exports = [
         "clobbers": [
             "CameraPopoverHandle"
         ]
+    },
+    {
+        "file": "plugins/com.msopentech.indexedDB/www/IndexedDBShim.min.js",
+        "id": "com.msopentech.indexedDB.IndexedDBShim",
+        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "org.apache.cordova.camera": "0.3.4"
+    "org.apache.cordova.camera": "0.3.4",
+    "com.msopentech.indexedDB": "0.1.1"
 }
 // BOTTOM OF METADATA
 });

@@ -30,6 +30,9 @@
     "installed_plugins": {
         "org.apache.cordova.camera": {
             "PACKAGE_NAME": "com.anyuaning.pgapp"
+        },
+        "com.msopentech.indexedDB": {
+            "PACKAGE_NAME": "com.anyuaning.pgapp"
         }
     },
     "dependent_plugins": {}
