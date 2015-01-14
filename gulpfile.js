@@ -46,7 +46,8 @@ gulp.task('install', ['git-check'], function() {
 gulp.task('connect', function () {
   connect.server({
     root: 'www',
-    livereload: true
+    livereload: true,
+	port: 9000
   });
 });
 

@@ -17,8 +17,10 @@
 
     <!-- your app's js -->
     <script src="js/app.js" type="text/javascript"></script>
-    <script src="js/camera.js", type="text/javascript"></script>
+    <script src="js/services.js", type="text/javascript"></script>
+    <script src="js/controllers.js", type="text/javascript"></script>
 
+    <script src="js/index.js", type="text/javascript"></script>
     <script type="text/javascript", charset="utf-8">
       function onLoad() {
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -30,7 +32,7 @@
     </script>
 
   </head>
-  <body onload="onLoad" ng-app="starter" ng-controller="TodoCtrl">
+  <body onload="app.initialize" ng-app="starter" ng-controller="TodoCtrl">
     <!--
     <ion-pane>
     <ion-header-bar class="bar-stable">
@@ -51,10 +53,11 @@
             <i class="icon ion-compose" ></i>
           </button>
         </ion-header-bar>
-        <ion-content scroll="false">
+        <ion-content scroll="true">
           <ion-list>
             <ion-item ng-repeat="task in activeProject.tasks">
               {{task.title}}
+              <img ng-src="{{task.lastPhoto}}", style="max-width: 100%" />
             </ion-item>
           </ion-list>
         </ion-content>
@@ -93,9 +96,10 @@
               <div class="padding">
                 <button type="submit" class="button button-block button-positive">Create Task</button>
               </div>
+              <button ng-click="getPhoto()", class="button button-block button-primary">Take Photo</button>
+              <img ng-src="{{lastPhoto}}", ng-model="lastPhoto", style="max-width: 100%" />
             </form>
-            <button ng-click="getPhoto()", class="button button-block button-primary">Take Photo</button>
-            <img ng-src="{{lastPhoto}}", style="max-width: 100%" />
+
           </ion-content>
         </div>
       </script>
