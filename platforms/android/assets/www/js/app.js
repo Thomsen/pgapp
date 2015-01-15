@@ -21,7 +21,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         StatusBar.styleDefault();
       }
 
-      alert("device already");
+      if (!window.indexedDB) {
+        window.alert("doesn't support indexeddb");
+      }
+
     });
 
     $ionicPlatform.registerBackButtonAction(function(e) {

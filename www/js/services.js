@@ -19,17 +19,38 @@ angular.module('starter.services', [])
   }])
 
   .factory('Projects', ['$q', function($q) {
-    var openReq = window.indexedDB.open("projects");
-    openReq.onupgradeneeded = function(event) {
-      var db = event.target.result;
-      var store = db.createObjectStore("project", {autoIncrement: true});
-      var titleIndex = store.createIndex("by_title", "title", {unique: true});
+    var projDB;
+    var setUp = false;
+    initDB = function() {
 
-    }
-    openReq.onsuccess = function(event) {
-    }
-    openReq.onerror = function(event) {
-    }
+      var deferq = $q.defer();
+      if (setUp) {
+        deferq.resolve(true);
+        return deferq.promise;
+      }
+
+      var openReq = window.indexedDB.open("projects");
+      openReq.onupgradeneeded = function(event) {
+        var db = event.target.result;
+        var store = db.createObjectStore("project", {autoIncrement: true});
+        var titleIndex = store.createIndex("by_title", "title", {unique: true});
+
+      }
+      openReq.onsuccess = function(event) {
+        projDB = event.target.result;
+        projDB.error = function(event) {
+          deferq.reject("database error: " + event.target.errorCode);
+        };
+        setup = true;
+        deferq.resolve(true);
+      }
+      openReq.onerror = function(event) {
+        console.err("project database error: " + event.target.errorCode);
+        deferq.reject(event.toString());
+      }
+      return deferq.promise;
+    };
+
     return  {
       all: function() {
         var projectString = window.localStorage['projects'];
@@ -40,33 +61,39 @@ angular.module('starter.services', [])
       },
       openReqAll: function() {
         var q = $q.defer();
-        var i_project = openReq.result.transaction("project", "readonly");
-        var store = i_project.objectStore("project");
-        var index = store.index("by_title");
-        var request = index.openCursor();
-        request.onsuccess = function() {
-          var cursor = request.result;
+        initDB().then(function() {
           var projects = [];
-          if (cursor) {
-            //report(cursor.value.title);
-            projects.push(cursor.values);
-            cursor.continue();
-          } else {
-            // report(null);
+          var iProject = projDB.transaction("project", "readonly");
+          var store = iProject.objectStore("project");
+          var index = store.index("by_title");
+          var request = store.openCursor();
+          request.onsuccess = function() {
+            var cursor = request.result;
+            if (cursor) {
+              //report(cursor.value.title);
+              //projects.push(angular.fromJson(cursor.value));
+              projects.push(cursor.value);
+              cursor.continue();
+            } else {
+              // report(null);
+            }
           }
-          q.resolve(projects);
-        }
+          iProject.oncomplete = function(event) {
+            q.resolve(projects);
+          }
+        })
         return q.promise;
       },
       save: function(projects) {
         console.log('save project: ', projects);
         window.localStorage['projects'] = angular.toJson(projects); // localstorage file
       },
-      openReqSave: function(projects) {
-        var i_project = openReq.result.transaction("project", "readwrite");
-        var store = i_project.objectStore("project");
-        store.put(angular.toJson(projects));
-        i_project.oncomplete = function() {
+      openReqSave: function(project) {
+        var iProject = projDB.transaction("project", "readwrite");
+        var store = iProject.objectStore("project");
+        //store.put(angular.toJson(project));
+        store.put(project);
+        iProject.oncomplete = function() {
           console.log("project saved");
         }
       },
@@ -77,10 +104,10 @@ angular.module('starter.services', [])
         };
       },
       getLastActiveIndex: function() {
-        //return parseInt(window.localStorage['lastActiveProjects']) || 0;
+        return parseInt(window.localStorage['lastActiveProjects']) || 0;
       },
       setLastActiveIndex: function(index) {
-        //window.localStorage['lastActiveProject'] = index;
+        window.localStorage['lastActiveProject'] = index;
       }
     }
   }])

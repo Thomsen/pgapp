@@ -26,16 +26,30 @@ angular.module('starter.controllers', [])
 
     var createProject = function(projectTitle) {
       var newProject = Projects.newProject(projectTitle);
+      Projects.openReqSave(newProject);
       $scope.projects.push(newProject);
-      Projects.openReqSave($scope.projects);
       $scope.selectProject(newProject, $scope.projects.length-1);
+      /*
+      Projects.openReqAll().then(function(projects) {
+        $scope.projects = projects;
+        $scope.projects.push(newProject);
+        Projects.openReqSave(newProject);
+        $scope.selectProject(newProject, $scope.projects.length-1);
+      })*/
     }
 
-    //$scope.projects = Projects.all();
-    $scope.projects = [];
     Projects.openReqAll().then(function(projects) {
       $scope.projects = projects;
-    });
+      $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
+    })
+
+    //$scope.projects = Projects.all();
+    /*
+    $scope.projects = Projects.openReqAll();
+    if (typeof($scope.projects) == "undefined") {
+      // typeof, number | string | boolean | object | function | undefined
+      $scope.projects = [];
+    }*/
 
     //$scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
 
