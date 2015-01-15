@@ -29,17 +29,16 @@ angular.module('starter.controllers', [])
       Projects.openReqSave(newProject).then(function(isSuccess) {
         console.log("createProject 1");
         if (isSuccess) {
+          Projects.openReqAll().then(function(projects) {
+            $scope.projects = projects;
+            $scope.selectProject(newProject, $scope.projects.length-1);
+          })
+          /*
           $scope.projects.push(newProject);
           $scope.selectProject(newProject, $scope.projects.length-1);
+          */
         }
       })
-      /*
-      Projects.openReqAll().then(function(projects) {
-        $scope.projects = projects;
-        $scope.projects.push(newProject);
-        Projects.openReqSave(newProject);
-        $scope.selectProject(newProject, $scope.projects.length-1);
-      })*/
     }
 
     Projects.openReqAll().then(function(projects) {
@@ -47,7 +46,6 @@ angular.module('starter.controllers', [])
       $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
     })
 
-    //$scope.projects = Projects.all();
     /*
     $scope.projects = Projects.openReqAll();
     if (typeof($scope.projects) == "undefined") {
@@ -55,6 +53,7 @@ angular.module('starter.controllers', [])
       $scope.projects = [];
     }*/
 
+    //$scope.projects = Projects.all();
     //$scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
 
     $scope.newProject = function() {

@@ -10,7 +10,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location',
-    function($ionicPlatform, $ionicPopup, $rootScope, $location) {
+        function($ionicPlatform, $ionicPopup, $rootScope, $location) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -23,6 +23,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
       if (!window.indexedDB) {
         window.alert("doesn't support indexeddb");
+      } else {
+        console.log("support indexedDB");
       }
 
     });
