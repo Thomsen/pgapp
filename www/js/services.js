@@ -89,13 +89,22 @@ angular.module('starter.services', [])
         window.localStorage['projects'] = angular.toJson(projects); // localstorage file
       },
       openReqSave: function(project) {
-        var iProject = projDB.transaction("project", "readwrite");
-        var store = iProject.objectStore("project");
-        //store.put(angular.toJson(project));
-        store.put(project);
-        iProject.oncomplete = function() {
-          console.log("project saved");
-        }
+        var q = $q.defer();
+        initDB().then(function() {
+          console.log("openReqSave 1");
+          var iProject = projDB.transaction("project", "readwrite");
+          console.log("openReqSave 2");
+          var store = iProject.objectStore("project");
+          console.log("openReqSave 3");
+          //store.put(angular.toJson(project));
+          store.put(project);
+          iProject.oncomplete = function() {
+            console.log("project saved");
+            q.resolve(true);
+          }
+
+        })
+        return q.promise;
       },
       newProject: function(projectTitle) {
         return {

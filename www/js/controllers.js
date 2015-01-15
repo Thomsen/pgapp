@@ -26,9 +26,13 @@ angular.module('starter.controllers', [])
 
     var createProject = function(projectTitle) {
       var newProject = Projects.newProject(projectTitle);
-      Projects.openReqSave(newProject);
-      $scope.projects.push(newProject);
-      $scope.selectProject(newProject, $scope.projects.length-1);
+      Projects.openReqSave(newProject).then(function(isSuccess) {
+        console.log("createProject 1");
+        if (isSuccess) {
+          $scope.projects.push(newProject);
+          $scope.selectProject(newProject, $scope.projects.length-1);
+        }
+      })
       /*
       Projects.openReqAll().then(function(projects) {
         $scope.projects = projects;
