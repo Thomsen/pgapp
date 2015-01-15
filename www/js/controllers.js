@@ -39,12 +39,14 @@ angular.module('starter.controllers', [])
           */
         }
       })
-    }
+    };
 
     Projects.openReqAll().then(function(projects) {
+      console.log("openReqAll 1");
       $scope.projects = projects;
+      console.log("openReqAll 2");
       $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
-    })
+    });
 
     /*
     $scope.projects = Projects.openReqAll();

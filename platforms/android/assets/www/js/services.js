@@ -22,20 +22,22 @@ angular.module('starter.services', [])
     var projDB;
     var setUp = false;
     initDB = function() {
-
+      console.log("initDB 1");
       var deferq = $q.defer();
       if (setUp) {
         deferq.resolve(true);
         return deferq.promise;
       }
-
-      var openReq = window.indexedDB.open("projects");
+      console.log("initDB 2");
+      var openReq = window.indexedDB.open("projects", 1);
+      console.log("initDB 3");
       openReq.onupgradeneeded = function(event) {
         var db = event.target.result;
         var store = db.createObjectStore("project", {autoIncrement: true});
         var titleIndex = store.createIndex("by_title", "title", {unique: true});
-
+        console.log("initDB 7");
       }
+      console.log("initDB 4");
       openReq.onsuccess = function(event) {
         projDB = event.target.result;
         projDB.error = function(event) {
@@ -44,10 +46,12 @@ angular.module('starter.services', [])
         setup = true;
         deferq.resolve(true);
       }
+      console.log("initDB 5");
       openReq.onerror = function(event) {
         console.err("project database error: " + event.target.errorCode);
         deferq.reject(event.toString());
       }
+      console.log("initDB 6");
       return deferq.promise;
     };
 
