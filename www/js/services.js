@@ -110,9 +110,19 @@ angular.module('starter.services', [])
           var iProject = projDB.transaction("project", "readwrite");
           console.log("openReqSave 2");
           var store = iProject.objectStore("project");
+          var index = store.index("by_title");
+          var request = index.openCursor(project.title);
+          request.onsuccess = function() {
+            var matching = request.result;
+            if (matching !== undefined) {
+              matching.update(project);
+            } else {
+              store.put(project);
+            }
+          }
+          request.onerror = function() {
+          }
           console.log("openReqSave 3");
-          //store.put(angular.toJson(project));
-          store.put(project);
           iProject.oncomplete = function() {
             console.log("project saved");
             q.resolve(true);

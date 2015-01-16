@@ -88,7 +88,8 @@ angular.module('starter.controllers', [])
       });
       $scope.taskModal.hide();
 
-      Projects.save($scope.projects);
+      //Projects.save($scope.projects);
+      Projects.openReqSave($scope.activeProject);
 
       task.title = "";
       task.lastPhoto = "";
