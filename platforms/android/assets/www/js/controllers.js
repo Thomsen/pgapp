@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
       }
       $scope.activeProject.tasks.push({
         title: task.title,
-        lastPhoto: task.lastPhoto
+        lastPhoto: $scope.lastPhoto
       });
       $scope.taskModal.hide();
 
@@ -93,6 +93,7 @@ angular.module('starter.controllers', [])
 
       task.title = "";
       task.lastPhoto = "";
+      $scope.lastPhoto = "";
     };
 
     $scope.closeNewTask = function() {

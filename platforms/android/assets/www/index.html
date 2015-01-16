@@ -88,7 +88,8 @@
                 <button type="submit" class="button button-block button-positive">Create Task</button>
               </div>
               <button ng-click="getPhoto()", class="button button-block button-primary">Take Photo</button>
-              <img ng-src="{{lastPhoto}}", ng-model="lastPhoto", style="max-width: 100%" />
+              <input type="hidden" ng-model="task.lastPhoto" value="{{lastPhoto}}" />
+              <img ng-src="{{lastPhoto}}", style="max-width: 100%" />
             </form>
 
           </ion-content>
