@@ -12,6 +12,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location',
         function($ionicPlatform, $ionicPopup, $rootScope, $location) {
     $ionicPlatform.ready(function() {
+      console.log("ready 1");
+
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
 //      if(window.cordova && window.cordova.plugins.Keyboard) {

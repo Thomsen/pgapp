@@ -16,7 +16,9 @@ angular.module('starter.controllers', [])
     };
 
   })
-  .controller('TodoCtrl', function($scope, $ionicModal, $ionicSideMenuDelegate, Projects, Camera) {
+  .controller('TodoCtrl', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Projects, Camera) {
+    console.log("TodoCtrl 1");
+    //Projects.initDB();
     $scope.tasks = [
       {title: "Activity"},
       {title: "Service"},
@@ -41,12 +43,6 @@ angular.module('starter.controllers', [])
       })
     };
 
-    Projects.openReqAll().then(function(projects) {
-      console.log("openReqAll 1");
-      $scope.projects = projects;
-      console.log("openReqAll 2");
-      $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
-    });
 
     /*
     $scope.projects = Projects.openReqAll();
@@ -120,5 +116,25 @@ angular.module('starter.controllers', [])
       });
     };
 
+    $timeout(function() {
+      Projects.openReqAll().then(function(projects) {
+        console.log("TodoCtrl openReqAll 1");
+        $scope.projects = projects;
+        console.log("TodoCtrl openReqAll 2");
+        if ($scope.projects.length == 0) {
+          while (true) {
+            var projectTitle = prompt("Your first project title: ");
+            if (projectTitle) {
+              createProject(projectTitle);
+              break;
+            }
+          }
+        } else {
+          $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
+        }
+      });
+    }, 1000)
+
+    console.log("TodoCtrl 0");
   })
 
