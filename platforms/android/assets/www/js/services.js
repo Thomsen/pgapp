@@ -114,7 +114,7 @@ angular.module('starter.services', [])
           var request = index.openCursor(project.title);
           request.onsuccess = function() {
             var matching = request.result;
-            if (matching !== undefined) {
+            if (matching) {
               matching.update(project);
             } else {
               store.put(project);
