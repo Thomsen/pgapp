@@ -13,3 +13,4 @@ gradle
 *bin
 # Gradle builds
 build
+assets/www
