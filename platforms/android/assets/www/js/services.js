@@ -138,7 +138,7 @@ angular.module('starter.services', [])
         };
       },
       getLastActiveIndex: function() {
-        return parseInt(window.localStorage['lastActiveProjects']) || 0;
+        return parseInt(window.localStorage['lastActiveProject']) || 0;
       },
       setLastActiveIndex: function(index) {
         window.localStorage['lastActiveProject'] = index;

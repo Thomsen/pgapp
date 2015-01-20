@@ -118,6 +118,10 @@ angular.module('starter.controllers', [])
       });
     };
 
+    $scope.taskClick = function(task) {
+      toast.showShort("task " + task.title + " click ." );
+    }
+
     $timeout(function() {
       Projects.openReqAll().then(function(projects) {
         console.log("TodoCtrl openReqAll 1");

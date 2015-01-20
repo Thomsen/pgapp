@@ -46,7 +46,7 @@
         </ion-header-bar>
         <ion-content scroll="true">
           <ion-list>
-            <ion-item ng-repeat="task in activeProject.tasks">
+            <ion-item ng-repeat="task in activeProject.tasks" ng-click="taskClick(task)">
               {{task.title}}
               <img ng-src="{{task.lastPhoto}}", style="max-width: 100%" />
             </ion-item>
