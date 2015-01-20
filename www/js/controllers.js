@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-  .controller('TodoCtrl', function($scope, Camera) {
+  .controller("CameraController", function($scope, Camera) {
     $scope.getPhoto = function() {
       Camera.getPicture().then(function(imageUri) {
         console.log(imageUri);
@@ -14,23 +14,19 @@ angular.module('starter.controllers', [])
         saveToPhotoAlbum: false
       });
     };
-
   })
-  .controller('TodoCtrl', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Projects, Camera, Geolocation) {
-    /*
-    $interval(function() {
-      console.log("interval 5 seconds");
-    }, 5000);*/
 
+  .controller('TodoController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Projects, Camera, Geolocation) {
+
+    /**
     var i = 0;
     setInterval(function() {
       console.log("interval 5 seconds");
       Projects.save(i);
       i++
-    }, 5000);
+    }, 5000);*/
 
     console.log("TodoCtrl 1");
-    //Projects.initDB();
     $scope.tasks = [
       {title: "Activity"},
       {title: "Service"},
@@ -47,24 +43,9 @@ angular.module('starter.controllers', [])
             $scope.projects = projects;
             $scope.selectProject(newProject, $scope.projects.length-1);
           })
-          /*
-          $scope.projects.push(newProject);
-          $scope.selectProject(newProject, $scope.projects.length-1);
-          */
         }
       })
     };
-
-
-    /*
-    $scope.projects = Projects.openReqAll();
-    if (typeof($scope.projects) == "undefined") {
-      // typeof, number | string | boolean | object | function | undefined
-      $scope.projects = [];
-    }*/
-
-    //$scope.projects = Projects.all();
-    //$scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
 
     $scope.newProject = function() {
       var projectTitle = prompt('Project name');
@@ -77,6 +58,10 @@ angular.module('starter.controllers', [])
       $scope.activeProject = project;
       Projects.setLastActiveIndex(index);
       $ionicSideMenuDelegate.toggleLeft(false);
+    };
+
+    $scope.toggleProjects = function() {
+      $ionicSideMenuDelegate.toggleLeft();
     };
 
     $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
@@ -99,8 +84,6 @@ angular.module('starter.controllers', [])
         lastPhoto: $scope.lastPhoto
       });
       $scope.taskModal.hide();
-
-      //Projects.save($scope.projects);
       Projects.openReqSave($scope.activeProject);
 
       task.title = "";
@@ -112,23 +95,6 @@ angular.module('starter.controllers', [])
       $scope.taskModal.hide();
     };
 
-    $scope.toggleProjects = function() {
-      $ionicSideMenuDelegate.toggleLeft();
-    };
-
-    $scope.getPhoto = function() {
-      Camera.getPicture().then(function(imageUri) {
-        console.log(imageUri);
-        $scope.lastPhoto = imageUri;
-      }, function(err) {
-        console.err(err);
-      }, {
-        quality: 75,
-        targetWidth: 320,
-        targetHeight: 320,
-        saveToPhotoAlbum: false
-      });
-    };
 
     $scope.taskClick = function(task) {
       toast.showShort("task " + task.title + " click ." );
