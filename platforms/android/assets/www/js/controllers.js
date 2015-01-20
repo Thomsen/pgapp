@@ -16,7 +16,19 @@ angular.module('starter.controllers', [])
     };
 
   })
-  .controller('TodoCtrl', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Projects, Camera) {
+  .controller('TodoCtrl', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Projects, Camera, Geolocation) {
+    /*
+    $interval(function() {
+      console.log("interval 5 seconds");
+    }, 5000);*/
+
+    var i = 0;
+    setInterval(function() {
+      console.log("interval 5 seconds");
+      Projects.save(i);
+      i++
+    }, 5000);
+
     console.log("TodoCtrl 1");
     //Projects.initDB();
     $scope.tasks = [
@@ -120,6 +132,7 @@ angular.module('starter.controllers', [])
 
     $scope.taskClick = function(task) {
       toast.showShort("task " + task.title + " click ." );
+      Geolocation.loc();
     }
 
     $timeout(function() {
