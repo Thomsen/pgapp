@@ -46,7 +46,8 @@ module.exports.metadata =
 {
     "org.apache.cordova.camera": "0.3.4",
     "com.msopentech.indexedDB": "0.1.1",
-    "com.chariotsolutions.toast.plugin": "1.1.1"
+    "com.chariotsolutions.toast.plugin": "1.1.1",
+    "org.apache.cordova.geolocation": "0.3.11"
 }
 // BOTTOM OF METADATA
 });
