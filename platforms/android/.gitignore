@@ -5,12 +5,17 @@ gradlew
 gradlew.bat
 gradle
 # Ant builds
-*ant-build
-*ant-gen
+ant-build
+ant-gen
+*/ant-build
+*/ant-gen
 # Eclipse builds
-*gen
-*out
-*bin
+bin
+gen
+out
+*/bin
+*/gen
+*/out
 # Gradle builds
 build
 assets/www
