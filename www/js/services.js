@@ -1,4 +1,9 @@
 angular.module('starter.services', [])
+  .factory('Data', function() {
+    return {
+      lastPhoto: ""
+    }
+  })
 
   .factory('Camera', ['$q', function($q) {
     return {

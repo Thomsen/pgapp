@@ -1,12 +1,14 @@
 angular.module('starter.controllers', [])
 
-  .controller("CameraController", function($scope, Camera) {
+  .controller("CameraController", function($scope, Data, Camera) {
+    //$scope.lastPhoto = Data.lastPhoto;
     $scope.getPhoto = function() {
       Camera.getPicture().then(function(imageUri) {
         console.log(imageUri);
-        $scope.lastPhoto = imageUri;
+        //Data.lastPhoto = imageUri;
+        $scope.$root.$broadcast("photoEvent", imageUri);
       }, function(err) {
-        console.err(err);
+        console.log(err);
       }, {
         quality: 75,
         targetWidth: 320,
@@ -16,7 +18,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('TodoController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Projects, Camera, Geolocation) {
+  .controller('TodoController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
 
     /**
     var i = 0;
@@ -33,6 +35,11 @@ angular.module('starter.controllers', [])
       {title: "Broadcast"},
       {title: "ContentProvider"}
     ];
+
+    //$scope.lastPhoto = Data.lastPhoto;
+    $scope.$on("photoEvent", function(event, lastPhoto) {
+      $scope.lastPhoto = lastPhoto;
+    })
 
     var createProject = function(projectTitle) {
       var newProject = Projects.newProject(projectTitle);

@@ -24,8 +24,8 @@
 
   </head>
   <body onload="app.initialize" ng-app="starter">
-    <ion-side-menus>
-      <ion-side-menu-content ng-controller="TodoController">
+    <ion-side-menus ng-controller="TodoController">
+      <ion-side-menu-content>
         <ion-header-bar class="bar-dark" >
           <button class="button button-icon" ng-click="toggleProjects()">
             <i class="icon ion-navicon"></i>
@@ -58,7 +58,7 @@
           </ion-tab>
         </ion-tabs>
       </ion-side-menu-content>
-      <ion-side-menu side="left" ng-controller="TodoController">
+      <ion-side-menu side="left">
         <ion-header-bar class="bar-dark">
           <h1 class="title">Projects</h1>
           <button class="button button-icon" ng-click="newProject()">
