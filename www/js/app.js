@@ -5,6 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
+  .config(function($ionicConfigProvider) {
+    $ionicConfigProvider.platform.android.tabs.position("bottom");
+    $ionicConfigProvider.tabs.style("standard");
+  })
   .config(function($compileProvider) {
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
   })
