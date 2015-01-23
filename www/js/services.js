@@ -165,9 +165,16 @@ angular.module('starter.services', [])
     var onError = function(error) {
       alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
     };
+    var watchId;
     return {
       loc: function() {
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
+      },
+      watchLoc: function() {
+        watchId = navigator.geolocation.watchPosition(onSuccess, onError, {enableHighAccuracy: true});
+      },
+      clearWatch: function() {
+        navigator.geolocation.clearWatch(watchID);
       }
     }
   })

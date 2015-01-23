@@ -105,7 +105,7 @@ angular.module('starter.controllers', [])
 
     $scope.taskClick = function(task) {
       toast.showShort("task " + task.title + " click ." );
-      Geolocation.loc();
+      Geolocation.watchLoc();
     }
 
     $timeout(function() {
