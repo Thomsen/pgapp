@@ -1,5 +1,12 @@
 angular.module('starter.controllers', [])
 
+  .controller('NavController', function($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeft = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    }
+    $scope.headerTitle = 'Home';
+  })
+
   .controller("CameraController", function($scope, Data, Camera) {
     //$scope.lastPhoto = Data.lastPhoto;
     $scope.getPhoto = function() {
@@ -16,6 +23,53 @@ angular.module('starter.controllers', [])
         saveToPhotoAlbum: false
       });
     };
+  })
+
+  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $timeout, Projects) {
+
+    var createProject = function(projectTitle) {
+      var newProject = Projects.newProject(projectTitle);
+      Projects.openReqSave(newProject).then(function(isSuccess) {
+        console.log("createProject 1");
+        if (isSuccess) {
+          Projects.openReqAll().then(function(projects) {
+            $scope.projects = projects;
+            $scope.selectProject(newProject, $scope.projects.length-1);
+          })
+        }
+      })
+    };
+
+    $scope.newProject = function() {
+      var projectTitle = prompt('Project name');
+      if (projectTitle) {
+        createProject(projectTitle);
+      }
+    };
+
+    $scope.selectProject = function(project, index) {
+      $scope.$root.$boradcast('activeProject', project);
+      Projects.setLastActiveIndex(index);
+      $ionicSideMenuDelegate.toggleLeft(false);
+    };
+
+    $timeout(function() {
+      Projects.openReqAll().then(function(projects) {
+        $scope.projects = projects;
+        if ($scope.projects.length == 0) {
+          while (true) {
+            var projectTitle = prompt("Your first project title: ");
+            if (projectTitle) {
+              createProject(projectTitle);
+              break;
+            }
+          }
+        } else {
+          var index = Projects.getLastActiveIndex();
+          $scope.selectProject($scope.projects(index), index);
+        }
+      });
+    }, 1000)
   })
 
   .controller('TodoController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
@@ -41,37 +95,11 @@ angular.module('starter.controllers', [])
       $scope.lastPhoto = lastPhoto;
     })
 
-    var createProject = function(projectTitle) {
-      var newProject = Projects.newProject(projectTitle);
-      Projects.openReqSave(newProject).then(function(isSuccess) {
-        console.log("createProject 1");
-        if (isSuccess) {
-          Projects.openReqAll().then(function(projects) {
-            $scope.projects = projects;
-            $scope.selectProject(newProject, $scope.projects.length-1);
-          })
-        }
-      })
-    };
+    $scope.$on("activeProject", function(event, activeProject) {
+      $scope.activeProject = activeProject;
+    })
 
-    $scope.newProject = function() {
-      var projectTitle = prompt('Project name');
-      if (projectTitle) {
-        createProject(projectTitle);
-      }
-    };
-
-    $scope.selectProject = function(project, index) {
-      $scope.activeProject = project;
-      Projects.setLastActiveIndex(index);
-      $ionicSideMenuDelegate.toggleLeft(false);
-    };
-
-    $scope.toggleProjects = function() {
-      $ionicSideMenuDelegate.toggleLeft();
-    };
-
-    $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
+    $ionicModal.fromTemplateUrl('task-new.html', function(modal) {
       $scope.taskModal = modal;
     }, {
       scope: $scope,
@@ -108,24 +136,7 @@ angular.module('starter.controllers', [])
       Geolocation.watchLoc();
     }
 
-    $timeout(function() {
-      Projects.openReqAll().then(function(projects) {
-        console.log("TodoCtrl openReqAll 1");
-        $scope.projects = projects;
-        console.log("TodoCtrl openReqAll 2");
-        if ($scope.projects.length == 0) {
-          while (true) {
-            var projectTitle = prompt("Your first project title: ");
-            if (projectTitle) {
-              createProject(projectTitle);
-              break;
-            }
-          }
-        } else {
-          $scope.activeProject = $scope.projects[Projects.getLastActiveIndex()];
-        }
-      });
-    }, 1000)
+
 
     console.log("TodoCtrl 0");
   })

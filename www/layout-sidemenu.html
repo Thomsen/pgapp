@@ -1,0 +1,22 @@
+<ion-side-menus ng-controller="NavController">
+  <ion-side-menu side="left">
+    <ion-nav-view name="side-left"></ion-nav-view>
+  </ion-side-menu>
+  <ion-side-menu-content>
+    <ion-header-bar class="bar-dark">
+      <button class="button button-icon" ng-click="toggleLeft()">
+        <i class="icon ion-navicon"></i>
+      </button>
+      <h1 class="title">{{headerTitle}}</h1>
+    </ion-header-bar>
+    <ion-content>
+      <ion-nav-view name="side-content">
+      </ion-nav-view>
+    </ion-content>
+  </ion-side-menu-content>
+  <!--
+  <ion-side-menu side="right">
+    <ion-nav-view name="side-right"></ion-nav-view>
+  </ion-side-menu>
+  -->
+</ion-side-menus>

@@ -8,14 +8,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('root', {
-        url: '/root',
-        templateUrl: 'root.html'
+        url: '/',
+        abstract: true,
+        templateUrl: 'layout-sidemenu.html'
       })
-      .state('fsthome', {
-        url: '/fsthome',
+      .state('root.home', {
+        url: 'home',
+        views: {
+          'side-left': {
+            templateUrl: 'index-left.html',
+            controller: 'ProjectController'
+          },
+          'side-content': {
+            templateUrl: 'index-content.html'
+          }
+        }
+      })
+      .state('home', {
+        url: '/ahome',
         templateUrl: 'fst-home.html',
       })
-    $urlRouterProvider.otherwise('/root');
+    $urlRouterProvider.otherwise('/home');
   }])
 
   .config(function($ionicConfigProvider) {
