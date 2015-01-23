@@ -24,6 +24,10 @@
 
   </head>
   <body onload="app.initialize" ng-app="starter">
+
+    <ion-nav-view></ion-nav-view>
+
+    <script id="root.html" type="text/ng-template">
     <ion-side-menus ng-controller="TodoController">
       <ion-side-menu-content>
         <ion-tabs class="tabs-icon-only">
@@ -59,8 +63,8 @@
             <ion-content has-tabs="true">
               <nav>
                 <ul>
-                  <li><a href="#/">Home</a></li>
-                  <li><a href="#/about">About</a></li>
+                  <li><a class="button button-halfwidth" ui-sref="fsthome">Home</a></li>
+                  <li><a class="button button-halfwidth" ui-sref="snd.about">About</a></li>
                 </ul>
               </nav>
 
@@ -121,5 +125,13 @@
       </script>
 
     </ion-side-menus>
+    </script>
+
+    <script id="fst-home.html", type="text/ng-template">
+      <ion-view title="first home">
+        <a class="button" nav-clear ui-sref="root">back to the root</a>
+      </ion-view>
+    </script>
+
   </body>
 </html>

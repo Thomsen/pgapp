@@ -5,10 +5,24 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+    $stateProvider
+      .state('root', {
+        url: '/root',
+        templateUrl: 'root.html'
+      })
+      .state('fsthome', {
+        url: '/fsthome',
+        templateUrl: 'fst-home.html',
+      })
+    $urlRouterProvider.otherwise('/root');
+  }])
+
   .config(function($ionicConfigProvider) {
     $ionicConfigProvider.platform.android.tabs.position("bottom");
     $ionicConfigProvider.tabs.style("standard");
   })
+
   .config(function($compileProvider) {
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
   })
