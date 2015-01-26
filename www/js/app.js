@@ -20,10 +20,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             controller: 'ProjectController'
           },
           'side-content': {
-            templateUrl: 'index-content.html'
+            templateUrl: 'index-home.html',
+            controller: 'TaskController'
           }
         }
       })
+      .state('root.about', {
+        url: 'about',
+        views: {
+          'side-left': {
+            templateUrl: 'index-left.html',
+            controller: 'ProjectController'
+          },
+          'side-content': {
+            templateUrl: 'index-about.html',
+          }
+        }
+      })
+      .state('root.settings', {
+        url: 'settings',
+        views: {
+          'side-left': {
+            templateUrl: 'index-left.html',
+            controller: 'ProjectController'
+          },
+          'side-content': {
+            templateUrl: 'index-settings.html',
+          }
+        }
+      })
+
       .state('home', {
         url: '/ahome',
         templateUrl: 'fst-home.html',

@@ -3,8 +3,13 @@ angular.module('starter.controllers', [])
   .controller('NavController', function($scope, $ionicSideMenuDelegate) {
     $scope.toggleLeft = function() {
       $ionicSideMenuDelegate.toggleLeft();
-    }
+    };
+
     $scope.headerTitle = 'Home';
+
+    $scope.$on("headerTitle", function(event, title) {
+      $scope.headerTitle = title;
+    });
   })
 
   .controller("CameraController", function($scope, Data, Camera) {
@@ -25,7 +30,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $timeout, Projects) {
+  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $location, $timeout, Projects) {
 
     var createProject = function(projectTitle) {
       var newProject = Projects.newProject(projectTitle);
@@ -48,9 +53,11 @@ angular.module('starter.controllers', [])
     };
 
     $scope.selectProject = function(project, index) {
-      $scope.$root.$boradcast('activeProject', project);
+      $scope.$root.$broadcast("headerTitle", project.title);
+      $scope.$root.$broadcast("activeProject", project);
       Projects.setLastActiveIndex(index);
       $ionicSideMenuDelegate.toggleLeft(false);
+      $location.path("/home");
     };
 
     $timeout(function() {
@@ -66,13 +73,13 @@ angular.module('starter.controllers', [])
           }
         } else {
           var index = Projects.getLastActiveIndex();
-          $scope.selectProject($scope.projects(index), index);
+          $scope.selectProject($scope.projects[index], index);
         }
       });
     }, 1000)
   })
 
-  .controller('TodoController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
+  .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
 
     /**
     var i = 0;
@@ -93,11 +100,11 @@ angular.module('starter.controllers', [])
     //$scope.lastPhoto = Data.lastPhoto;
     $scope.$on("photoEvent", function(event, lastPhoto) {
       $scope.lastPhoto = lastPhoto;
-    })
+    });
 
     $scope.$on("activeProject", function(event, activeProject) {
       $scope.activeProject = activeProject;
-    })
+    });
 
     $ionicModal.fromTemplateUrl('task-new.html', function(modal) {
       $scope.taskModal = modal;
@@ -135,8 +142,6 @@ angular.module('starter.controllers', [])
       toast.showShort("task " + task.title + " click ." );
       Geolocation.watchLoc();
     }
-
-
 
     console.log("TodoCtrl 0");
   })
