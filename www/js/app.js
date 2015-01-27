@@ -46,6 +46,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           },
           'side-content': {
             templateUrl: 'index-settings.html',
+            controller: 'SettingsController'
           }
         }
       })

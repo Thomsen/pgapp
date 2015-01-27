@@ -125,7 +125,21 @@
         </ion-nav-buttons>
 
         <ion-content>
-          settings
+          <form ng-submit="login(user)">
+            <div class="list">
+              <label class="item item-input">
+                <input type="text" placeholder="username" ng-model="user.username"/>
+              </label>
+              <label class="item item-input">
+                <input class="password" placeholder="password" ng-model="user.password"/>
+              </label>
+            </div>
+            <div class="padding">
+              <button type="submit" class="button">
+                Login
+              </button>
+            </div>
+          </form>
         </ion-content>
 
 

@@ -146,3 +146,42 @@ angular.module('starter.controllers', [])
     console.log("TodoCtrl 0");
   })
 
+  .controller('SettingsController', function($scope, $http) {
+    $scope.login = function(user) {
+      /*
+      $http({method: 'POST',
+             params: {},
+             data: {},
+             url: "http://localhost:3000/users/login",
+             header: {
+               'Content-Type': 'application/json:charset=utf-8'
+             },
+            })*/
+      var postData = user;
+      $http.post("http://localhost:3000/users/login", postData,
+                 {headers: {
+                   'Content-Type': 'application/x-www-form-urlencoded',
+                   /*'Accept': 'application/json'*/
+                 },
+                  transformRequest: function(data) {
+                    var str = [];
+                    for (var p in data) {
+                      if (data.hasOwnProperty(p)) {
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(data[p]));
+                      }
+
+                    }
+                    return str.join("&");
+                  },
+                  transformResponse: function(data) {
+                    return data;
+                  }})
+        .success(function(response, status, headers, config) {
+          console.log("http status " + status);
+          console.log("http response " + angular.toJson(response));
+        })
+        .error(function(response, status, headers, config) {
+          console.log("http error " + status);
+        });
+    };
+  })
