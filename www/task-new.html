@@ -14,6 +14,7 @@
         <button type="submit" class="button button-block button-positive">Create Task</button>
       </div>
       <button ng-click="getPhoto()" ng-controller="CameraController" class="button button-block button-primary">Take Photo</button>
+      <button ng-click="callContext()" ng-controller="ContextController" class="button button-block button-primary">Call Context</button>
       <input type="hidden" ng-model="task.lastPhoto" value="{{lastPhoto}}" />
       <img ng-src="{{lastPhoto}}" style="max-width: 100%" />
     </form>

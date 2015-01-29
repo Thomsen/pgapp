@@ -9,7 +9,11 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.camera.CameraLauncher\" /></feature>",
+                            "xml": "<feature name=\"Camera\"><param name=\"android-package\" value=\"org.apache.cordova.plugin.CameraLauncher\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"pgappPlugin\"><param name=\"android-package\" value=\"com.anyuaning.pgapp.plugin.ContextCallPlugin\" /></feature>",
                             "count": 1
                         }
                     ],
@@ -52,6 +56,9 @@
             "PACKAGE_NAME": "com.anyuaning.pgapp"
         },
         "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "com.anyuaning.pgapp"
+        },
+        "com.anyuaning.pgapp.plugin": {
             "PACKAGE_NAME": "com.anyuaning.pgapp"
         }
     },

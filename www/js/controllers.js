@@ -12,6 +12,14 @@ angular.module('starter.controllers', [])
     });
   })
 
+  .controller("ContextController", function($scope) {
+    $scope.callContext = function() {
+      pgapp.callContext("com.anyuaning.pgapp.CordovaMainActivity", function() {
+      }, function() {
+      })}
+
+  })
+
   .controller("CameraController", function($scope, Data, Camera) {
     //$scope.lastPhoto = Data.lastPhoto;
     $scope.getPhoto = function() {
