@@ -38,7 +38,7 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $location, $timeout, Projects) {
+  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $location, $timeout, Projects, AlarmTimer) {
 
     var createProject = function(projectTitle) {
       var newProject = Projects.newProject(projectTitle);
@@ -83,6 +83,7 @@ angular.module('starter.controllers', [])
           var index = Projects.getLastActiveIndex();
           $scope.selectProject($scope.projects[index], index);
         }
+        AlarmTimer.testTimer();
       });
     }, 1000)
   })

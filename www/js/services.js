@@ -1,9 +1,41 @@
 angular.module('starter.services', [])
   .factory('Data', function() {
+    var i = 0;
     return {
-      lastPhoto: ""
+      lastPhoto: "",
+
+      Task: function() {
+        title: "";
+        date: "";
+      },
+
+      Person: function() {
+        title: "";
+        tasks: [];
+      }
     }
   })
+
+  .factory('AlarmTimer', ['$q', 'Data', 'Projects', function($q, Data, Projects) {
+    var i = 0;
+    var project = new Object();
+    project.title = "";
+    project.tasks = [];
+
+    return {
+      testTimer: function() {
+        setInterval(function() {
+          console.log("testTimer exec after 5 seconds");
+          var task = new Object();
+          project.title = 'testTimer';
+          task.title = i + "_" + angular.toJson(new Date());
+          project.tasks.push(task);
+          Projects.openReqSave(project);
+          i++;
+        }, 10000);
+      }
+    }
+  }])
 
   .factory('Camera', ['$q', function($q) {
     return {
