@@ -152,6 +152,15 @@ angular.module('starter.controllers', [])
       Geolocation.watchLoc();
     }
 
+    $scope.refreshTask = function() {
+      Projects.openReqAll().then(function(projects) {
+        $scope.projects = projects;
+        var index = Projects.getLastActiveIndex();
+        $scope.activeProject = $scope.projects[index];
+        $scope.$broadcast('scroll.refreshComplete');
+      })
+    }
+
     console.log("TodoCtrl 0");
   })
 

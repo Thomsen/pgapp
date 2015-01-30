@@ -22,17 +22,23 @@ angular.module('starter.services', [])
     project.title = "";
     project.tasks = [];
 
+    var timer;
+
     return {
       testTimer: function() {
-        setInterval(function() {
+        timer = setInterval(function() {
           console.log("testTimer exec after 5 seconds");
           var task = new Object();
           project.title = 'testTimer';
-          task.title = i + "_" + angular.toJson(new Date());
-          project.tasks.push(task);
+          var time = new Date();
+          task.title = i + "_" + time;
+          project.tasks.unshift(task);
           Projects.openReqSave(project);
           i++;
         }, 10000);
+      },
+      clearTimer: function() {
+        clearInterval(timer);
       }
     }
   }])

@@ -58,6 +58,8 @@
         </ion-nav-buttons>
 
         <ion-content has-header="true" has-tabs="true">
+          <ion-refresher pulling-text="Refreshing Task" on-refresh="refreshTask()">
+          </ion-refresher>
 
           <ion-list>
             <ion-item ng-repeat="task in activeProject.tasks" ng-click="taskClick(task)">
