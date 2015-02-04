@@ -204,11 +204,22 @@ angular.module('starter.services', [])
       alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
     };
     var watchId;
+    var now = new Date().getTime();
+    var _60_seconds_from_now = new Date(now + 60 * 1000);
     return {
       loc: function() {
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
       },
       watchLoc: function() {
+        // notification
+        window.plugin.notification.local.add({
+          id: 1,
+          title: 'watch loc',
+          message: 'Obtain GPS',
+          repeat: 'weekly',
+          date: _60_seconds_from_now});
+
+        // loc
         watchId = navigator.geolocation.watchPosition(onSuccess, onError, {enableHighAccuracy: true});
       },
       clearWatch: function() {
