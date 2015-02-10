@@ -35,6 +35,9 @@ var app = {
   onDeviceReady: function() {
     console.log("deviceready 1");
     app.receivedEvent('deviceready');
+
+    // sqlite db
+    var db = window.sqlitePlugin.openDatabase({name: "my.db"});
   },
   // Update DOM on a Received Event
   receivedEvent: function(id) {

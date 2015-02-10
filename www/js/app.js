@@ -25,6 +25,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         console.log("support indexedDB");
       }
 
+      // sqlite db
+      var sqliteDB = window.sqlitePlugin.openDatabase({name: "my.db"});
+      sqliteDB.transaction(function(tx) {
+        tx.executeSql('drop table if exists users');
+        tx.executeSql('create table if not exists users (_id integer primary key, username text, password text)');
+
+        sqliteDB.executeSql("pragma table_info (users);", [], function(res) {
+          console.log("PRAGMA res: " + JSON.stringify(res));
+        });
+
+        tx.executeSql("insert into users (username, password) values (?, ?)", ["pg", "123456"], function(tx, res) {
+          console.log("insertId: " + res.insertId + " -- probably 1");
+          console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
+
+          sqliteDB.transaction(function(tx) {
+            tx.executeSql("select count(id) as cnt from users;", [], function(tx, res) {
+              console.log("res.rows.length: " + res.rows.length + " -- should be 1");
+              console.log("res.rows.item(0).cnt: " + res.rows.item(0).cnt + " -- should be 1");
+            });
+          });
+        });
+
+      }, function(e) {
+        console.log("Error: " + e.message);
+      });
+
     });
 
     $ionicPlatform.registerBackButtonAction(function(e) {
