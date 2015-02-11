@@ -165,6 +165,8 @@ angular.module('starter.controllers', [])
   })
 
   .controller('SettingsController', function($scope, $http) {
+    $scope.title = "expander";
+    $scope.text = "expander text";
     $scope.login = function(user) {
       /*
       $http({method: 'POST',
