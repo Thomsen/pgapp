@@ -14,6 +14,7 @@ angular.module('starter.directives', [])
       restrict: 'EA',
       replace: true,
       transclude: true,
+      require: '^?accordion',
       scope: {
         title: '=expanderTitle'
       },
@@ -21,10 +22,34 @@ angular.module('starter.directives', [])
       + '<div class="title" ng-click="toggle()">{{title}}</div>'
       + '<div class="body" ng-show="showMe" ng-transclude></div>'
         + '</div>',
-      link: function(scope, element, attrs) {
+      link: function(scope, element, attrs, accordionController) {  // accordionController is null, expander out need accordion
         scope.showMe = false;
+        accordionController.addExpander(scope);  // not read property 'addExpander' of nul
         scope.toggle = function toggle() {
           scope.showMe = !scope.showMe;
+          accordionController.gotOpened(scope);
+        }
+      }
+    }
+  })
+
+  .directive('accordion', function() {
+    return {
+      restrict: 'EA',
+      replace: true,
+      transclude: true,
+      template: '<div ng-transclude></div>',
+      controller: function() {
+        var expanders = [];
+        this.gotOpened = function(selectedExpander) {
+          angular.forEach(expanders, function(expander) {
+            if (selectedExpander != expander) {
+              expander.showMe = false;
+            }
+          });
+        }
+        this.addExpander = function(expander) {
+          expanders.push(expander);
         }
       }
     }
