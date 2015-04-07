@@ -48,6 +48,8 @@ angular.module('starter.services', [])
       getPicture: function(options) {
         var q = $q.defer();
         console.log("navigator camera getPicture");
+        var options = new Object();
+        options.sourceType = 1;  /* 0: gallery 1: camera */
         navigator.camera.getPicture(function(result) {
           console.log("getPicture success");
           q.resolve(result);

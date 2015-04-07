@@ -14,9 +14,18 @@ angular.module('starter.controllers', [])
 
   .controller("ContextController", function($scope) {
     $scope.callContext = function() {
-      pgapp.callContext("com.anyuaning.pgapp.CordovaMainActivity", function() {
-      }, function() {
-      })}
+      console.log("pgappContext call");
+      //pgappContext.callContext("com.anyuaning.pgapp.CordovaMainActivity", function(message) {
+      //  console.log("pgappContext call success: " + message);
+      //}, function(message) {
+      //  console.log("pgappContext call error: " + message);
+      //});
+      pgappTimer.onceTimer("pgappTimer once", function(message) {
+        console.log("pgappTimer call success: " + message);
+      }, function(message) {
+        console.log("pgappTimer call error: " + message);
+      });
+    }
 
   })
 
@@ -90,13 +99,12 @@ angular.module('starter.controllers', [])
 
   .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
 
-    /**
     var i = 0;
     setInterval(function() {
       console.log("interval 5 seconds");
       Projects.save(i);
       i++
-    }, 5000);*/
+    }, 5000);
 
     console.log("TodoCtrl 1");
     $scope.tasks = [

@@ -3,22 +3,30 @@
     xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.anyuaning.pgapp.plugin"
-    version="0.0.1">
+    version="0.0.2">
 
   <name>pgappPlugin</name>
 
-  <js-module src="www/context_call.js" name="pgappPlugin">
-    <clobbers target="pgapp" />
+  <js-module src="www/context_call.js" name="pgappContext">
+    <clobbers target="pgappContext" />
+  </js-module>
+
+  <js-module src="www/timer_call.js" name="pgappTimer">
+    <clobbers target="pgappTimer" />
   </js-module>
 
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="pgappPlugin">
+      <feature name="pgappContext">
         <param name="android-package" value="com.anyuaning.pgapp.plugin.ContextCallPlugin" />
+      </feature>
+      <feature name="pgappTimer">
+        <param name="android-package" value="com.anyuaning.pgapp.plugin.AlarmTimerPlugin" />
       </feature>
     </config-file>
 
     <source-file src="src/android/com/anyuaning/pgapp/plugin/ContextCallPlugin.java"  target-dir="src/com/anyuaning/pgapp/plugin" />
+    <source-file src="src/android/com/anyuaning/pgapp/plugin/AlarmTimerPlugin.java" target-dir="src/com/anyuaning/pgapp/plugin" />
 
     <config-file target="AndroidManifest.xml" parent="/*" >
     </config-file>

@@ -4,9 +4,6 @@
     <feature name="Camera">
         <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
     </feature>
-    <feature name="pgappPlugin">
-        <param name="android-package" value="com.anyuaning.pgapp.plugin.ContextCallPlugin" />
-    </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
     </feature>
@@ -19,6 +16,15 @@
     <feature name="SplashScreen">
         <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
         <param name="onload" value="true" />
+    </feature>
+    <feature name="pgappContext">
+        <param name="android-package" value="com.anyuaning.pgapp.plugin.ContextCallPlugin" />
+    </feature>
+    <deature name="pgappTimer">
+        <param name="android-packge" value="com.anyuaning.pgapp.plugin.AlarmTimerPlugin" />
+    </deature>
+    <feature name="pgappTimer">
+        <param name="android-package" value="com.anyuaning.pgapp.plugin.AlarmTimerPlugin" />
     </feature>
     <feature name="Toasty">
         <param name="android-package" value="com.chariotsolutions.toast.plugin.ToastPlugin" />
