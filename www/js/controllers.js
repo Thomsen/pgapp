@@ -25,6 +25,11 @@ angular.module('starter.controllers', [])
       }, function(message) {
         console.log("pgappTimer call error: " + message);
       });
+      pgappTimer.loopTimer("pgappTimer loop", function(message) {
+        console.log("pgappTimer call loop success: " + message);
+      }, function(message) {
+        console.log("pgappTimer call loop error: " + message);
+      });
     }
 
   })
