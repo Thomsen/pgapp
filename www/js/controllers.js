@@ -97,7 +97,10 @@ angular.module('starter.controllers', [])
           var index = Projects.getLastActiveIndex();
           $scope.selectProject($scope.projects[index], index);
         }
+        // test interval timer
         AlarmTimer.testTimer();
+        // test alarm timer
+        AlarmTimer.testAlarmTimer();
       });
     }, 1000)
   })

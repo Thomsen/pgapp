@@ -39,6 +39,19 @@ angular.module('starter.services', [])
       },
       clearTimer: function() {
         clearInterval(timer);
+      },
+      testAlarmTimer: function() {
+        pgappTimer.loopTimer("test alarm timer", function(message) {
+          project.title = 'testAlarmTimer';
+          var alarmTask = new Object();
+          var alarmTime = new Date();
+          alarmTask.title = i + "_" + alarmTime;
+          project.tasks.unshift(alarmTask);
+          Projects.openReqSave(project);
+          i++;
+        }, function(message) {
+          console.log("test alarm timer error: " + message);
+        });
       }
     }
   }])
