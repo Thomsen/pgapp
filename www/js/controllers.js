@@ -15,21 +15,26 @@ angular.module('starter.controllers', [])
   .controller("ContextController", function($scope) {
     $scope.callContext = function() {
       console.log("pgappContext call");
-      //pgappContext.callContext("com.anyuaning.pgapp.CordovaMainActivity", function(message) {
-      //  console.log("pgappContext call success: " + message);
+      pgappContext.callActivity("com.anyuaning.pgapp.CordovaMainActivity", function(message) {
+        console.log("call activity success: " + message);
+      }, function(message) {
+        console.log("call activity error: " + message);
+      });
+      pgappContext.callService("com.anyuaning.pgapp.service.TimerEventService", function(message) {
+        console.log("call service success: " + message);
+      }, function(message) {
+        console.log("call service error: " + message);
+      });
+      //pgappTimer.onceTimer("pgappTimer once", function(message) {
+      //  console.log("pgappTimer call success: " + message);
       //}, function(message) {
-      //  console.log("pgappContext call error: " + message);
+      //  console.log("pgappTimer call error: " + message);
       //});
-      pgappTimer.onceTimer("pgappTimer once", function(message) {
-        console.log("pgappTimer call success: " + message);
-      }, function(message) {
-        console.log("pgappTimer call error: " + message);
-      });
-      pgappTimer.loopTimer("pgappTimer loop", function(message) {
-        console.log("pgappTimer call loop success: " + message);
-      }, function(message) {
-        console.log("pgappTimer call loop error: " + message);
-      });
+      //pgappTimer.loopTimer("pgappTimer loop", function(message) {
+      //  console.log("pgappTimer call loop success: " + message);
+      //}, function(message) {
+      //  console.log("pgappTimer call loop error: " + message);
+      //});
     }
 
   })

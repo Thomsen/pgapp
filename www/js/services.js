@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['geoposition'])
   .factory('Data', function() {
     var i = 0;
     return {
@@ -16,7 +16,7 @@ angular.module('starter.services', [])
     }
   })
 
-  .factory('AlarmTimer', ['$q', 'Data', 'Projects', function($q, Data, Projects) {
+  .factory('AlarmTimer', ['$q', 'Data', 'Projects', 'GeopositionService', 'pggeocache', function($q, Data, Projects, GeopositionService, pggeocache) {
     var i = 0;
     var project = new Object();
     project.title = "";
@@ -49,6 +49,11 @@ angular.module('starter.services', [])
           project.tasks.unshift(alarmTask);
           Projects.openReqSave(project);
           i++;
+
+          // save geocache
+          pggeocache.mobile_time = new Date();
+          GeopositionService.saveData(pggeocache);
+
         }, function(message) {
           console.log("test alarm timer error: " + message);
         });

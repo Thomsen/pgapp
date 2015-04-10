@@ -3,14 +3,14 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.routes', 'starter.directives'])
+pgapp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'starter.routes', 'starter.directives', 'geoposition'])
 
-  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location',
-        function($ionicPlatform, $ionicPopup, $rootScope, $location, AlarmTimer) {
+  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location', 'AlarmTimer', 'GeopositionService',
+        function($ionicPlatform, $ionicPopup, $rootScope, $location, AlarmTimer, GeopositionService) {
           $ionicPlatform.ready(function() {
             console.log("ready 1");
 
-            navigator.splashscreen.hide();
+            //navigator.splashscreen.hide();
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -26,6 +26,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             } else {
               console.log("support indexedDB");
             }
+
+            GeopositionService.createTable();
 
             // sqlite db
             var sqliteDB = window.sqlitePlugin.openDatabase({name: "my.db"});
@@ -68,6 +70,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 if (res) {
                   console.log("confirmPopup exit ");
                   //            navigator.app.exitApp();
+                  pgappContext.stopService("com.anyuaning.pgapp.service.TimerEventService");
                   ionic.Platform.exitApp();
                 } else {
                 }
@@ -89,4 +92,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           }, 100);
 
         }])
+
+pgapp.value('pggeocache', {"longitude": 0, "latitude": 0, "alitutde": "", "accuracy": "", "altitudeAccuracy": "", "heading": "", "source": ""});
 
