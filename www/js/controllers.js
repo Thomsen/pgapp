@@ -15,26 +15,56 @@ angular.module('starter.controllers', [])
   .controller("ContextController", function($scope) {
     $scope.callContext = function() {
       console.log("pgappContext call");
-      pgappContext.callActivity("com.anyuaning.pgapp.CordovaMainActivity", function(message) {
-        console.log("call activity success: " + message);
-      }, function(message) {
-        console.log("call activity error: " + message);
-      });
-      pgappContext.callService("com.anyuaning.pgapp.service.TimerEventService", function(message) {
-        console.log("call service success: " + message);
-      }, function(message) {
-        console.log("call service error: " + message);
-      });
-      //pgappTimer.onceTimer("pgappTimer once", function(message) {
-      //  console.log("pgappTimer call success: " + message);
+      //pgappContext.callActivity("com.anyuaning.pgapp.CordovaMainActivity", function(message) {
+        //console.log("call activity success: " + message);
       //}, function(message) {
-      //  console.log("pgappTimer call error: " + message);
+        //console.log("call activity error: " + message);
       //});
-      //pgappTimer.loopTimer("pgappTimer loop", function(message) {
-      //  console.log("pgappTimer call loop success: " + message);
+      //pgappContext.callService("com.anyuaning.pgapp.service.TimerEventService", function(message) {
+        //console.log("call service success: " + message);
       //}, function(message) {
-      //  console.log("pgappTimer call loop error: " + message);
+        //console.log("call service error: " + message);
       //});
+      var timerArgs = new Object();
+      timerArgs.interval = 10000;
+      pgappTimer.onceTimer(timerArgs, function(message) {
+        console.log("pgappTimer call success: " + message);
+      }, function(message) {
+        console.log("pgappTimer call error: " + message);
+      });
+      timerArgs.action = "test";
+      pgappTimer.loopBroadTimer(timerArgs, function(message) {
+        console.log("pgappTimer call loop success: " + message);
+      }, function(message) {
+        console.log("pgappTimer call loop error: " + message);
+      });
+      timerArgs.serviceClassName = "com.anyuaning.pgapp.service.TimerEventService";
+      timerArgs.action = "test2";
+      pgappTimer.loopServTimer(timerArgs, function(message) {
+        console.log("pgappTimer call loop service success: " + message);
+      }, function(message) {
+        console.log("pgappTimer call loop service error: " + message);
+      });
+      setTimeout(function() {
+        console.log("cancel service timer");
+        var cancelTimer = new Object();
+        cancelTimer.serviceClassName = "com.anyuaning.pgapp.service.TimerEventService";
+        cancelTimer.action = "test2";
+        pgappTimer.cancelServTimer(cancelTimer, function(message) {
+          console.log("pgappTimer cancel loop service success: " + message);
+        }, function(message) {
+          console.log("pgappTimer cancel loop service error: " + message);
+        });
+      }, 30000);
+      setTimeout(function() {
+        var cancelTim = new Object();
+        cancelTim.action = "test";
+        pgappTimer.cancelBroadTimer(cancelTim, function(message) {
+          console.log("pgappTimer cancel loop broad success: " + message);
+        }, function(message) {
+          console.log("pgappTimer cancel loop broad error: " + message);
+        });
+      }, 20000);
     }
 
   })

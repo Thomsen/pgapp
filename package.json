@@ -18,6 +18,7 @@
   },
   "cordovaPlugins": [
     "org.apache.cordova.splashscreen",
-    "plugman\\com.anyuaning.pgapp.plugin"
+    "plugman\\com.anyuaning.pgapp.plugin",
+    "plugins\\com.anyuaning.pgapp.plugin"
   ]
 }

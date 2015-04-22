@@ -58,16 +58,28 @@ public class ContextCallPlugin extends CordovaPlugin {
         //callbackContext.success("success");
     }
 
-    private void callService(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        String message = args.getString(0);
-        Intent intent = new Intent();
-        intent.setAction(message);
-        Context context = this.cordova.getActivity();
-        context.startService(intent);
+    private void callService(final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    String message = null;
+                    try {
+                        message = args.getString(0);
+                        Log.i("thom", "call service: " + message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        return ;
+                    }
+                    Intent intent = new Intent();
+                    intent.setAction(message);
+                    Context context = cordova.getActivity();
+                    context.startService(intent);
 
-        PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
-        plugResult.setKeepCallback(true);
-        callbackContext.sendPluginResult(plugResult);
+                    PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
+                    plugResult.setKeepCallback(true);
+                    callbackContext.sendPluginResult(plugResult);
+                }
+         });
     }
 
     private void stopService(JSONArray args, CallbackContext callbackContext) throws JSONException {

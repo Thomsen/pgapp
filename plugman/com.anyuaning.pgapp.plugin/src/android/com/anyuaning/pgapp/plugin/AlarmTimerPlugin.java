@@ -22,7 +22,13 @@ public class AlarmTimerPlugin extends CordovaPlugin {
 
     private static final String ONCE_TIMER_ACTION = "onceTimer";
 
-    private static final String LOOP_TIMER_ACTION = "loopTimer";
+    private static final String LOOP_BROADCAST_TIMER_ACTION = "loopBroadcastTimer";
+
+    private static final String LOOP_SERVICE_TIMER_ACTION = "loopServiceTimer";
+
+    private static final String CANCEL_BROADCAST_TIMER_ACTION = "cancelBroadcastTimer";
+
+    private static final String CANCEL_SERVICE_TIMER_ACTION = "cancelServiceTimer";
 
     private Context mContext;
 
@@ -41,12 +47,10 @@ public class AlarmTimerPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         mContext = this.cordova.getActivity();
         alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        Log.i("thom", "alarm timer plugin jsonarray");
+        CordovaArgs coargs = new CordovaArgs(args);
         if (ONCE_TIMER_ACTION.equals(action)) {
             Log.i("thom", "pgappTimer onceTimer jsonarray");
-
-            registerOnceAlarm(3000, callbackContext);
-
+            registerOnceAlarm(coargs, callbackContext);
             PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
             plugResult.setKeepCallback(true);
             callbackContext.sendPluginResult(plugResult);
@@ -54,11 +58,27 @@ public class AlarmTimerPlugin extends CordovaPlugin {
             return true;
         }
 
-        if (LOOP_TIMER_ACTION.equals(action)) {
-            Log.i("thom", "pgappTimer loopTimer jsonarray");
+        if (LOOP_BROADCAST_TIMER_ACTION.equals(action)) {
+            Log.i("thom", "pgappTimer loopBroadcastTimer jsonarray");
+            registerLoopBroadcastAlarm(coargs, callbackContext);
+            return true;
+        }
 
-            registerLoopAlarm(5000, callbackContext);
+        if (LOOP_SERVICE_TIMER_ACTION.equals(action)) {
+            Log.i("thom", "pgappTimer loopServiceTimer jsonarray");
+            registerLoopServiceAlarm(coargs, callbackContext);
+            return true;
+        }
 
+        if (CANCEL_BROADCAST_TIMER_ACTION.equals(action)) {
+            Log.i("thom", "pgappTimer cancelBroadcastTimer jsonarray");
+            cancelBroadcastAlarm(coargs, callbackContext);
+            return true;
+        }
+
+        if (CANCEL_SERVICE_TIMER_ACTION.equals(action)) {
+            Log.i("thom", "pgappTimer cancelServiceTimer jsonarray");
+            cancelServiceAlarm(coargs, callbackContext);
             return true;
         }
 
@@ -67,20 +87,23 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         return super.execute(action, args, callbackContext);
     }
 
-    public void registerOnceAlarm(int interval, CallbackContext callbackContext) {
+    public void registerOnceAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
         registerTaskReceiver(callbackContext, ONCE_TIMER_ACTION);
         Intent intent = new Intent();
         intent.setAction(ONCE_TIMER_ACTION);
         PendingIntent onceIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         if (null != alarmManager) {
+            int interval = args.getInt(0);
             alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + interval, onceIntent);
         }
     }
 
-    public void registerLoopAlarm(int interval, CallbackContext callbackContext) {
-        registerTaskReceiver(callbackContext, LOOP_TIMER_ACTION);
+    public void registerLoopBroadcastAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        int interval = args.getInt(0);
+        String action = args.getString(2);
+        registerTaskReceiver(callbackContext, action);
         Intent intent = new Intent();
-        intent.setAction(LOOP_TIMER_ACTION);
+        intent.setAction(action);
         PendingIntent loopIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         if (null != alarmManager) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), interval, loopIntent);
@@ -105,4 +128,43 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         intentFilter.addAction(action);
         mContext.getApplicationContext().registerReceiver(receiver, intentFilter);
     }
+
+    public void registerLoopServiceAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        int interval = args.getInt(0);
+        String serviceClassName = args.getString(1);
+        String action = args.getString(2);
+        Intent intent = new Intent();
+        intent.setClassName(mContext, serviceClassName);
+        intent.setAction(action);
+        intent.putExtra(action, true);
+        PendingIntent loopIntent = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        if (null != alarmManager) {
+            alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), interval, loopIntent);
+            Log.i("thom", "loop service alarm serviceClassName: " + serviceClassName);
+        }
+        // how callback context
+    }
+
+    public void cancelBroadcastAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        String action = args.getString(2);
+        Intent intent = new Intent();
+        intent.setAction(action);
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        if (null != alarmManager) {
+            alarmManager.cancel(pi);
+        }
+    }
+
+    public void cancelServiceAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
+        String serviceClassName = args.getString(1);
+        String action = args.getString(2);
+        Intent intent = new Intent();
+        intent.setClassName(mContext, serviceClassName);
+        intent.setAction(action);
+        PendingIntent pi = PendingIntent.getService(mContext, 0, intent, 0);
+        if (null != alarmManager) {
+            alarmManager.cancel(pi);
+        }
+    }
+
 }
