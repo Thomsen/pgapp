@@ -16,6 +16,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Context;
 import android.os.SystemClock;
+import javax.net.ssl.SSLEngineResult.Status;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AlarmTimerPlugin extends CordovaPlugin {
@@ -32,7 +35,11 @@ public class AlarmTimerPlugin extends CordovaPlugin {
 
     private Context mContext;
 
+    private CallbackContext mCallbackContext;
+
     private AlarmManager alarmManager;
+
+    private Map<String, BroadcastReceiver> cachedReceiver;  // String content common, but object different
 
     @Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
@@ -46,7 +53,9 @@ public class AlarmTimerPlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         mContext = this.cordova.getActivity();
+        mCallbackContext = callbackContext;
         alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        cachedReceiver= new HashMap<String, BroadcastReceiver>();
         CordovaArgs coargs = new CordovaArgs(args);
         if (ONCE_TIMER_ACTION.equals(action)) {
             Log.i("thom", "pgappTimer onceTimer jsonarray");
@@ -111,23 +120,25 @@ public class AlarmTimerPlugin extends CordovaPlugin {
     }
 
     private void registerTaskReceiver(final CallbackContext callbackContext, final String action) {
-        BroadcastReceiver receiver = new BroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(action);
+        mContext.getApplicationContext().registerReceiver(receiver, intentFilter);
+    }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
                 Log.d("thom", "task receiver " + action + " exec");
 
                 // PluginResult plugResultLoop = new PluginResult(PluginResult.Status.NO_RESULT);
                 PluginResult plugResultLoop = new PluginResult(PluginResult.Status.OK);
                 plugResultLoop.setKeepCallback(true);
-                callbackContext.sendPluginResult(plugResultLoop);
+                mCallbackContext.sendPluginResult(plugResultLoop);
 
                 // callbackContext.success("timer work action"); // sendPluginResult(new PluginResult(PluginResult.Status.OK, message));
             }
-         };
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(action);
-        mContext.getApplicationContext().registerReceiver(receiver, intentFilter);
-    }
+        };
 
     public void registerLoopServiceAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
         int interval = args.getInt(0);
@@ -152,7 +163,9 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, intent, 0);
         if (null != alarmManager) {
             alarmManager.cancel(pi);
+            unregisterBroadcast(action);
         }
+
     }
 
     public void cancelServiceAlarm(CordovaArgs args, CallbackContext callbackContext) throws JSONException {
@@ -167,4 +180,20 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         }
     }
 
+    private void unregisterBroadcast(String action) {
+        try {
+            Log.i("thom", "unregister broadcast receiver: " + action);
+             BroadcastReceiver receiver = cachedReceiver.get(action);
+             if (null != receiver) {
+                 mContext.unregisterReceiver(receiver);
+                 cachedReceiver.remove(action);
+             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void unregisterBroadcast() {
+        mContext.unregisterReceiver(receiver);
+    }
 }
