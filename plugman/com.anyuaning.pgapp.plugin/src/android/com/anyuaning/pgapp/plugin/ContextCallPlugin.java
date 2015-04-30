@@ -9,9 +9,12 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import java.util.List;
 
 public class ContextCallPlugin extends CordovaPlugin {
 
@@ -72,8 +75,9 @@ public class ContextCallPlugin extends CordovaPlugin {
                     }
                     Intent intent = new Intent();
                     intent.setAction(message);
+                    Intent explicitIntent = new Intent(getExplicitIntent(intent));
                     Context context = cordova.getActivity();
-                    context.startService(intent);
+                    context.startService(explicitIntent);
 
                     PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
                     plugResult.setKeepCallback(true);
@@ -92,6 +96,24 @@ public class ContextCallPlugin extends CordovaPlugin {
         PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
         plugResult.setKeepCallback(true);
         callbackContext.sendPluginResult(plugResult);
+    }
+
+    private Intent getExplicitIntent(Intent implicitIntent) {
+        PackageManager pm = this.cordova.getActivity().getPackageManager();
+        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
+
+        if (null == resolveInfo || 1 != resolveInfo.size()) {
+            return null;
+        }
+
+        ResolveInfo serviceInfo = resolveInfo.get(0);
+        String packageName = serviceInfo.serviceInfo.packageName;
+        String className = serviceInfo.serviceInfo.name;
+        ComponentName component = new ComponentName(packageName, className);
+
+        Intent explicitIntent = new Intent(implicitIntent);
+        explicitIntent.setComponent(component);
+        return explicitIntent;
     }
 
 }
