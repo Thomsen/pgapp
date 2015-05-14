@@ -9,6 +9,8 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var connect = require('gulp-connect');
 
+var karma = require('karma').server;
+
 var paths = {
   sass: ['./scss/**/*.scss']
 };
@@ -65,4 +67,9 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-
+gulp.task('test', function(done) {
+  karma.start({
+    configFile: __dirname + '/www/js/test/karma.conf.js',
+    singleRun: true
+  }, done);
+});
