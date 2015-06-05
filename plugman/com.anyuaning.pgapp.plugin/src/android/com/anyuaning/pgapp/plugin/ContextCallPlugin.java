@@ -9,6 +9,7 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
@@ -24,9 +25,14 @@ public class ContextCallPlugin extends CordovaPlugin {
 
     private static final String STOP_SERVICE_ACTION = "stopService";
 
+    private static final String CALL_BROADCAST = "callBroadcast";
+
+    private CallbackContext mCallbackContext;
+
     @Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
         Log.i("thom", "cordova plugin args");
+        mCallbackContext = callbackContext;
         if (CALL_ACTIVITY_ACTION.equals(action)) {
 
         }
@@ -37,8 +43,9 @@ public class ContextCallPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
         throws JSONException {
         Log.i("thom", "cordova plugin json");
+        mCallbackContext = callbackContext;
         if (CALL_ACTIVITY_ACTION.equals(action)) {
-            callActivity(args, callbackContext);
+            return callActivity(args, callbackContext);
         }
         if (CALL_SERVICE_ACTION.equals(action)) {
             callService(args, callbackContext);
@@ -49,7 +56,7 @@ public class ContextCallPlugin extends CordovaPlugin {
         return super.execute(action, args, callbackContext);
     }
 
-    private void callActivity(JSONArray args, CallbackContext callbackContext) throws JSONException {
+    private boolean callActivity(JSONArray args, CallbackContext callbackContext) throws JSONException {
         String message = args.getString(0);  // JSONException
         Intent intent = new Intent();
         intent.setAction(message);
@@ -59,6 +66,16 @@ public class ContextCallPlugin extends CordovaPlugin {
         plugResult.setKeepCallback(true);
         callbackContext.sendPluginResult(plugResult);
         //callbackContext.success("success");
+
+        return true;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (Activity.RESULT_OK == resultCode && null != intent) {
+            String result = intent.getStringExtra("result");
+            Log.i("thom", "activit result " + result);
+            mCallbackContext.success(result);
+        }
     }
 
     private void callService(final JSONArray args, final CallbackContext callbackContext) throws JSONException {

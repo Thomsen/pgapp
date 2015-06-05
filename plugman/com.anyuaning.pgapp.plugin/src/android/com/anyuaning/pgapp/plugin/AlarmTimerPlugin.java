@@ -113,7 +113,7 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         registerTaskReceiver(callbackContext, action);
         Intent intent = new Intent();
         intent.setAction(action);
-        PendingIntent loopIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent loopIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (null != alarmManager) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), interval, loopIntent);
         }
@@ -148,7 +148,7 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         intent.setClassName(mContext, serviceClassName);
         intent.setAction(action);
         intent.putExtra(action, true);
-        PendingIntent loopIntent = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent loopIntent = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (null != alarmManager) {
             alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), interval, loopIntent);
             Log.i("thom", "loop service alarm serviceClassName: " + serviceClassName);
@@ -160,7 +160,7 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         String action = args.getString(2);
         Intent intent = new Intent();
         intent.setAction(action);
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, intent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (null != alarmManager) {
             alarmManager.cancel(pi);
             unregisterBroadcast(action);
@@ -174,9 +174,13 @@ public class AlarmTimerPlugin extends CordovaPlugin {
         Intent intent = new Intent();
         intent.setClassName(mContext, serviceClassName);
         intent.setAction(action);
-        PendingIntent pi = PendingIntent.getService(mContext, 0, intent, 0);
+        intent.putExtra(action ,true);
+        PendingIntent pi = PendingIntent.getService(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);  // UPDATE use already PendingIntent, intent must common
         if (null != alarmManager) {
             alarmManager.cancel(pi);
+            Log.i("thom", "cancel service alarm: " + serviceClassName);
+        } else {
+            Log.i("thom", "cancel alarmmanager null");
         }
     }
 
