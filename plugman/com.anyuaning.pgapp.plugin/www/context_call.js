@@ -8,16 +8,23 @@ function onError(message) {
 }
 
 module.exports = {
-  callActivity: function(message, onSuccess, onError) {
-    cordova.exec(onSuccess, onError, "pgappContext", "callActivity", [message]);
+  callActivity: function(contextParams, onSuccess, onError) {
+    var contextAction = contextParams.action;
+    var contextValue = contextParams.value;
+    var args = [contextAction, contextValue];
+    cordova.exec(onSuccess, onError, "pgappContext", "callActivity", args);
   },
 
-  callService: function(message, onSuccess, onError) {
-    cordova.exec(onSuccess, onError, "pgappContext", "callService", [message]);
+  callService: function(contextParams, onSuccess, onError) {
+    var contextAction = contextParams.aciton;
+    var args = [contextAction];
+    cordova.exec(onSuccess, onError, "pgappContext", "callService", args);
   },
 
-  stopService: function(message) {
-    cordova.exec(onSuccess, onError, "pgappContext", "callService", [message]);
+  stopService: function(contextParams) {
+    var contextAction = contextParams.action;
+    var args = [contextAction];
+    cordova.exec(onSuccess, onError, "pgappContext", "callService", args);
   }
 
 }

@@ -19,6 +19,8 @@ import java.util.List;
 
 public class ContextCallPlugin extends CordovaPlugin {
 
+    public static final String EXTRA_CONTEXT_VALUE = "context_value";
+
     private static final String CALL_ACTIVITY_ACTION = "callActivity";
 
     private static final String CALL_SERVICE_ACTION = "callService";
@@ -57,9 +59,11 @@ public class ContextCallPlugin extends CordovaPlugin {
     }
 
     private boolean callActivity(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        String message = args.getString(0);  // JSONException
+        String action = args.getString(0);  // JSONException
+        String contextValue = args.getString(1);
         Intent intent = new Intent();
-        intent.setAction(message);
+        intent.setAction(action);
+        intent.putExtra(EXTRA_CONTEXT_VALUE, contextValue);
         this.cordova.startActivityForResult(this, intent, 1);
 
         PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
@@ -82,16 +86,16 @@ public class ContextCallPlugin extends CordovaPlugin {
         cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
-                    String message = null;
+                    String action = null;
                     try {
-                        message = args.getString(0);
-                        Log.i("thom", "call service: " + message);
+                        action = args.getString(0);
+                        Log.i("thom", "call service: " + action);
                     } catch (JSONException e) {
                         e.printStackTrace();
                         return ;
                     }
                     Intent intent = new Intent();
-                    intent.setAction(message);
+                    intent.setAction(action);
                     Intent explicitIntent = new Intent(getExplicitIntent(intent));
                     Context context = cordova.getActivity();
                     context.startService(explicitIntent);
@@ -104,9 +108,9 @@ public class ContextCallPlugin extends CordovaPlugin {
     }
 
     private void stopService(JSONArray args, CallbackContext callbackContext) throws JSONException {
-        String message = args.getString(0);
+        String action = args.getString(0);
         Intent intent = new Intent();
-        intent.setAction(message);
+        intent.setAction(action);
         Context context = this.cordova.getActivity();
         context.stopService(intent);
 
