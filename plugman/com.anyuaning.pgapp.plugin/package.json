@@ -1,0 +1,23 @@
+{
+  "name": "cordova-pgapp-plugin",
+  "version": "0.0.5",
+  "description": "pgapp cordova plugin",
+  "cordova": {
+    "id": "cordova-pgapp-plugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "android",
+    "context"
+  ],
+  "author": "Thomsen",
+  "license": "Apache 2.0"
+}
