@@ -2,7 +2,7 @@
 
 ## Installation
 
-  cordova plugin add com.anyuaning.pgapp.plugin
+  cordova plugin add cordova-pgapp-plugin
 
 ## Changelog
 

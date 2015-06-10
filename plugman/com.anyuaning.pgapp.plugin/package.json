@@ -1,6 +1,6 @@
 {
   "name": "cordova-pgapp-plugin",
-  "version": "0.0.5",
+  "version": "0.1.1",
   "description": "pgapp cordova plugin",
   "cordova": {
     "id": "cordova-pgapp-plugin",
