@@ -24,7 +24,7 @@ module.exports = {
   stopService: function(contextParams) {
     var contextAction = contextParams.action;
     var args = [contextAction];
-    cordova.exec(onSuccess, onError, "pgappContext", "callService", args);
+    cordova.exec(onSuccess, onError, "pgappContext", "stopService", args);
   }
 
 }

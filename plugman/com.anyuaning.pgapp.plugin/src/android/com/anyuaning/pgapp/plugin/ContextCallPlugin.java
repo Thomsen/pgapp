@@ -111,15 +111,16 @@ public class ContextCallPlugin extends CordovaPlugin {
         String action = args.getString(0);
         Intent intent = new Intent();
         intent.setAction(action);
+        Intent explictIntent = new Intent(getExplicitIntent(intent));
         Context context = this.cordova.getActivity();
-        context.stopService(intent);
+        context.stopService(explictIntent);
 
         PluginResult plugResult = new PluginResult(PluginResult.Status.NO_RESULT);
         plugResult.setKeepCallback(true);
         callbackContext.sendPluginResult(plugResult);
     }
 
-    private Intent getExplicitIntent(Intent implicitIntent) {
+    private Intent getExplicitIntent(Intent implicitIntent) { // android 5.0 service intent must be explicit
         PackageManager pm = this.cordova.getActivity().getPackageManager();
         List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
 
