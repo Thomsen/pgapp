@@ -20,6 +20,22 @@
     "karma-chrome-launcher": "~0.1.11",
     "karma-firefox-launcher": "~0.1"
   },
-  "cordovaPlugins": [],
-  "cordovaPlatforms": []
+  "cordovaPlugins": [
+    "cordova-plugin-device",
+    "cordova-plugin-camera",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-sqlite",
+    "com.anyuaning.pgapp.plugin",
+    "cordova-plugin-toast",
+    "cordova-plugin-indexedDB",
+    "cordova-plugin-splashscreen"
+  ],
+  "cordovaPlatforms": [
+    "android",
+    {
+      "platform": "android",
+      "version": "4.0.0",
+      "locator": "android"
+    }
+  ]
 }
