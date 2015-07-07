@@ -20,9 +20,6 @@
     "karma-chrome-launcher": "~0.1.11",
     "karma-firefox-launcher": "~0.1"
   },
-  "cordovaPlugins": [
-    "org.apache.cordova.splashscreen",
-    "plugman\\com.anyuaning.pgapp.plugin",
-    "plugins\\com.anyuaning.pgapp.plugin"
-  ]
+  "cordovaPlugins": [],
+  "cordovaPlatforms": []
 }
