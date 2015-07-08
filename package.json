@@ -21,12 +21,12 @@
     "karma-firefox-launcher": "~0.1"
   },
   "cordovaPlugins": [
-    "cordova-plugin-device",
     "cordova-plugin-camera",
     "cordova-plugin-geolocation",
     "cordova-plugin-sqlite",
     "cordova-plugin-toast",
     "cordova-plugin-splashscreen",
+    "cordova-plugin-device",
     "cordova-pgapp-plugin"
   ],
   "cordovaPlatforms": [

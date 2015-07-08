@@ -70,14 +70,16 @@ pgapp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.serv
                 if (res) {
                   console.log("confirmPopup exit ");
                   //            navigator.app.exitApp();
-                  pgappContext.stopService("com.anyuaning.pgapp.service.TimerEventService");
+                  var contextParams = {};
+                  contextParams.action = "com.anyuaning.pgapp.service.TimerEventService";
+                  window.pgappContext.stopService(contextParams); // pgappContext undefined
                   ionic.Platform.exitApp();
                 } else {
                 }
               });
             }
 
-            console.log("location path ", $location.path())
+            console.log("location path ", $location.path());
             showConfirm();
             /*
               if ($location.path() == '/index') {
@@ -91,7 +93,6 @@ pgapp = angular.module('starter', ['ionic', 'starter.controllers', 'starter.serv
             return false;
           }, 100);
 
-        }])
+        }]);
 
 pgapp.value('pggeocache', {"longitude": 0, "latitude": 0, "alitutde": "", "accuracy": "", "altitudeAccuracy": "", "heading": "", "source": ""});
-

@@ -26,7 +26,11 @@ var app = {
   // Bind any events that are required on startup. Common events are:
   // 'load', 'deviceready', 'offline', and 'online'.
   bindEvents: function() {
-    document.addEventListener('deviceready', this.onDeviceReady, false);
+    if (browser.versions.mobile_android || browser.versions.mobile_apple) {
+      document.addEventListener('deviceready', this.onDeviceReady, false);
+    } else {
+      angular.bootstrap(document, ['starter']);
+    }
   },
   // deviceready Event Handler
   //
@@ -36,19 +40,46 @@ var app = {
     console.log("deviceready 1");
     app.receivedEvent('deviceready');
 
+    // bootstrap
+    angular.bootstrap(document, ['starter']);
+
     // sqlite db
     var db = window.sqlitePlugin.openDatabase({name: "my.db"});
   },
   // Update DOM on a Received Event
   receivedEvent: function(id) {
+    /*
     var parentElement = document.getElementById(id);
     var listeningElement = parentElement.querySelector('.listening');
     var receivedElement = parentElement.querySelector('.received');
 
     listeningElement.setAttribute('style', 'display:none;');
     receivedElement.setAttribute('style', 'display:block;');
+    */
 
     console.log('Received Event: ' + id);
     console.log(navigator.camera);
   }
+};
+
+var browser = {
+  versions: function() {
+    var u = navigator.userAgent;
+    var app = navigator.appVersion;
+    return {
+      trident: u.indexOf('Trident') > -1,
+      presto: u.indexOf('Presto') > -1,
+      webkit: u.indexOf('AppleWebKit') > -1,
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
+      mobile: !!u.indexOf(/AppleWebKit.*Mobile.*/),
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+      android: u.indexOf('Android') > -1 && u.indexOf('Linux') > -1,
+      iphone: u.indexOf('iPhone') > -1,
+      ipad: u.indexOf('iPda') > -1,
+      webapp: u.indexOf('Safari') == -1,
+      mobile_apple: /(iPhone|iPad|iPod|iOS)/i.test(u),
+      mobile_android: /(Android|MIUI)/i.test(u)
+    };
+  }(),
+  language: (navigator.browserLanguage || navigator.language).toLowerCase()
 };
