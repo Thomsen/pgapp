@@ -25,10 +25,9 @@
     "cordova-plugin-camera",
     "cordova-plugin-geolocation",
     "cordova-plugin-sqlite",
-    "com.anyuaning.pgapp.plugin",
     "cordova-plugin-toast",
-    "cordova-plugin-indexedDB",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-pgapp-plugin"
   ],
   "cordovaPlatforms": [
     "android",
