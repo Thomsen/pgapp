@@ -15,5 +15,21 @@
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0",
     "gulp-connect": "^2.2.0"
-  }
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-camera",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-sqlite",
+    "cordova-plugin-toast",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-device",
+    "cordova-pgapp-plugin"
+  ],
+  "cordovaPlatforms": [
+    {
+      "platform": "android",
+      "version": "3.6.4",
+      "locator": "android"
+    }
+  ]
 }
