@@ -26,7 +26,7 @@ angular.module('starter.controllers', [])
         //console.log("call service error: " + message);
       //});
       var timerArgs = new Object();
-      timerArgs.interval = 10000;
+      timerArgs.interval = 10000;//interval制定对function或methodName调用两次之间的时间，单位是毫秒
       pgappTimer.onceTimer(timerArgs, function(message) {
         console.log("pgappTimer call success: " + message);
       }, function(message) {
