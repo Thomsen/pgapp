@@ -37,7 +37,10 @@ geoposition.factory('GeopositionService', function(pggeocache) {
   var getInstance = function() {
     if (!dbInstance) {
       // native already singleton
-      dbInstance = window.sqlitePlugin.openDatabase({name: 'GeopositionCached.db'});
+      try {
+        dbInstance = window.sqlitePlugin.openDatabase({name: 'GeopositionCached.db'});
+      } catch (e) {
+      }
       //console.log("patrol db open");
     }
     return dbInstance;
@@ -72,6 +75,9 @@ geoposition.factory('GeopositionService', function(pggeocache) {
 
     // 创建坐标缓存表
     createTable: function() {
+      if (!getInstance()) {
+        return ;
+      }
       getInstance().transaction(function(tx) {
         //tx.executeSql('drop table if exists geoposition;');
         tx.executeSql('create table if not exists geoposition (id integer primary key, longitude text, latitude text, mobile_time text, corrected_time text, buz_flag text, patrol_radius text, status text, source text )');
@@ -80,6 +86,9 @@ geoposition.factory('GeopositionService', function(pggeocache) {
 
     // 保存坐标信息
     saveData: function(geocache) {
+      if (!getInstance()) {
+        return ;
+      }
       getInstance().transaction(function(tx) {
         var longitude = geocache.longitude;
         var latitude = geocache.latitude;
@@ -101,6 +110,9 @@ geoposition.factory('GeopositionService', function(pggeocache) {
 
     // 更新坐标状态信息
     updateData: function(dataId, status) {
+      if (!getInstance()) {
+        return ;
+      }
       getInstance().transaction(function(tx) {
 
         tx.executeSql("update geoposition set status = ? where id = ?;", [status, dataId], function(tx, res) {
@@ -113,7 +125,9 @@ geoposition.factory('GeopositionService', function(pggeocache) {
 
     // 查询已缓存坐标信息
     findDatas: function(onSuccess) {
-
+      if (!getInstance()) {
+        return ;
+      }
       console.log("geoposition find datas");
       getInstance().transaction(function(tx) {
         // getInstance().executeSql("sele... no execute
@@ -126,13 +140,16 @@ geoposition.factory('GeopositionService', function(pggeocache) {
 
     // 删除已经上传的坐标
     deleteDatas: function(status) {
+      if (!getInstance()) {
+        return ;
+      }
       getInstance().transaction(function(tx) {
         tx.executeSql("delete from geoposition where status = ?;", [status], function(tx, res) {
         }, function(e) {
           console.log("delete error: " + e.message);
         });
       });
-    },
+    }
 
-  }
+  };
 });

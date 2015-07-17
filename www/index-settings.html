@@ -1,0 +1,47 @@
+
+<ion-view title="Settings">
+
+  <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-navicon" menu-toggle="left">
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <form ng-submit="login(user)">
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="username" ng-model="user.username"/>
+        </label>
+        <label class="item item-input">
+          <input class="password" placeholder="password" ng-model="user.password"/>
+        </label>
+      </div>
+      <div class="padding">
+        <button type="submit" class="button">
+          Login
+        </button>
+      </div>
+    </form>
+    <hello>
+      <span>original</span><br />
+      <span>here</span>
+    </hello>
+    <accordion>
+      <expander class='expander' ng-repeat="expander in expanders" expander-title='expander.title'>
+        {{expander.text}}
+      </expander>
+      <accordion>
+  </ion-content>
+
+
+  <div class="tabs tabs-icon-only">
+    <a nav-clear class="tab-item disable-user-behavior" title="Home" ui-sref="root.home">
+      <i class="icon ion-ios-home"><span class="table-title ng-binding" ng-bind-html="title"></span></i>
+    </a>
+    <a nav-clear class="tab-item disable-user-behavior" title="About" ui-sref="root.about" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+      <i class="icon ion-ios-clock"><span class="table-title ng-binding" ng-bind-html="title"></span></i>
+    </a>
+    <a nav-clear class="tab-item disable-user-behavior active" title="Settings" ui-ref="root.settings" icon-on="ion-ios-filing" icon-off="ion-ios-filing-outline">
+      <i class="icon ion-ios-gear"><span class="table-title ng-binding" ng-bind-html="title"></span></i>
+    </a>
+</ion-view>

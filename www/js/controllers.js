@@ -16,14 +16,14 @@ angular.module('starter.controllers', [])
     $scope.callContext = function() {
       console.log("pgappContext call");
       //pgappContext.callActivity("com.anyuaning.pgapp.CordovaMainActivity", function(message) {
-        //console.log("call activity success: " + message);
+      //console.log("call activity success: " + message);
       //}, function(message) {
-        //console.log("call activity error: " + message);
+      //console.log("call activity error: " + message);
       //});
       //pgappContext.callService("com.anyuaning.pgapp.service.TimerEventService", function(message) {
-        //console.log("call service success: " + message);
+      //console.log("call service success: " + message);
       //}, function(message) {
-        //console.log("call service error: " + message);
+      //console.log("call service error: " + message);
       //});
       var timerArgs = new Object();
       timerArgs.interval = 10000;//interval制定对function或methodName调用两次之间的时间，单位是毫秒
@@ -65,7 +65,7 @@ angular.module('starter.controllers', [])
           console.log("pgappTimer cancel loop broad error: " + message);
         });
       }, 20000);
-    }
+    };
 
   })
 
@@ -97,9 +97,9 @@ angular.module('starter.controllers', [])
           Projects.openReqAll().then(function(projects) {
             $scope.projects = projects;
             $scope.selectProject(newProject, $scope.projects.length-1);
-          })
+          });
         }
-      })
+      });
     };
 
     $scope.newProject = function() {
@@ -133,21 +133,23 @@ angular.module('starter.controllers', [])
           $scope.selectProject($scope.projects[index], index);
         }
         // test interval timer
-        AlarmTimer.testTimer();
+        //AlarmTimer.testTimer();
         // test alarm timer
-        AlarmTimer.testAlarmTimer();
+        //AlarmTimer.testAlarmTimer();
       });
-    }, 1000)
+    }, 1000);
   })
 
   .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
 
-    var i = 0;
-    setInterval(function() {
-      console.log("interval 5 seconds");
-      Projects.save(i);
-      i++
-    }, 5000);
+    /*
+     var i = 0;
+     setInterval(function() {
+     console.log("interval 5 seconds");
+     Projects.save(i);
+     i++;
+     }, 5000);
+     */
 
     console.log("TodoCtrl 1");
     $scope.tasks = [
@@ -201,7 +203,7 @@ angular.module('starter.controllers', [])
     $scope.taskClick = function(task) {
       toast.showShort("task " + task.title + " click ." );
       Geolocation.watchLoc();
-    }
+    };
 
     $scope.refreshTask = function() {
       Projects.openReqAll().then(function(projects) {
@@ -209,10 +211,48 @@ angular.module('starter.controllers', [])
         var index = Projects.getLastActiveIndex();
         $scope.activeProject = $scope.projects[index];
         $scope.$broadcast('scroll.refreshComplete');
-      })
-    }
+      });
+    };
 
     console.log("TodoCtrl 0");
+  })
+
+  .controller('AboutController', function($scope, $rootScope, $ionicUser, $ionicPush) {
+    $scope.identifyUser = function() {
+      console.log("ionic user: identifying with ionic user service");
+      var user = $ionicUser.get();
+      if (!user.user_id) {
+        user.user_id = $ionicUser.generateGUID();
+      };
+
+      angular.extend(user, {
+        name: 'Ionitron',
+        bio: 'I come from planet Ion'
+      });
+
+      $ionicUser.identify(user).then(function() {
+        $scope.identified = true;
+        alert('Identified user ' + user.name + '\n Id ' + user.user_id);
+      });
+    };
+    $scope.pushRegister = function() {
+      console.log('ionic push: registering user');
+      $ionicPush.register({
+        canShowAlert: true,
+        canSetBadge: true,
+        canPlaySound: true,
+        canRunActionOnWake: true,
+        onNotification: function(notifiction) {
+          console.log('notifi: ' + notification);
+          return true;
+        }
+      });
+    };
+    $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+      alert("successfully registered token " + data.token);
+      console.log('ionic push: got token ', data.token, data.platform);
+      $scope.token = data.token;
+    });
   })
 
   .controller('SettingsController', function($scope, $http) {
@@ -225,21 +265,21 @@ angular.module('starter.controllers', [])
     }, {
       title: 'expander 3',
       text: 'expander test 3'
-    }]
+    }];
     $scope.login = function(user) {
       /*
-      $http({method: 'POST',
-             params: {},
-             data: {},
-             url: "http://localhost:3000/users/login",
-             header: {
-               'Content-Type': 'application/json:charset=utf-8'
-             },
-            })*/
+       $http({method: 'POST',
+       params: {},
+       data: {},
+       url: "http://localhost:3000/users/login",
+       header: {
+       'Content-Type': 'application/json:charset=utf-8'
+       },
+       })*/
       var postData = user;
       $http.post("http://localhost:3000/users/login", postData,
                  {headers: {
-                   'Content-Type': 'application/x-www-form-urlencoded',
+                   'Content-Type': 'application/x-www-form-urlencoded'
                    /*'Accept': 'application/json'*/
                  },
                   transformRequest: function(data) {
@@ -263,4 +303,4 @@ angular.module('starter.controllers', [])
           console.log("http error " + status);
         });
     };
-  })
+  });

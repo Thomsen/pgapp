@@ -29,6 +29,7 @@ angular.module('starter.routes', [])
           },
           'side-content': {
             templateUrl: 'index-about.html',
+            controller: 'AboutController'
           }
         }
       })

@@ -21,13 +21,18 @@
     "karma-firefox-launcher": "~0.1"
   },
   "cordovaPlugins": [
-    "cordova-plugin-camera",
-    "cordova-plugin-geolocation",
-    "cordova-plugin-sqlite",
-    "cordova-plugin-toast",
-    "cordova-plugin-splashscreen",
+    "cordova-pgapp-plugin",
     "cordova-plugin-device",
-    "cordova-pgapp-plugin"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-toast",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-camera",
+    "cordova-plugin-sqlite",
+    {
+      "locator": "https://github.com/phonegap-build/PushPlugin.git",
+      "id": "com.phonegap.plugins.PushPlugin"
+    },
+    "cordova-plugin-whitelist"
   ],
   "cordovaPlatforms": [
     "android",
