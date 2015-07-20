@@ -32,7 +32,11 @@
       "locator": "https://github.com/phonegap-build/PushPlugin.git",
       "id": "com.phonegap.plugins.PushPlugin"
     },
-    "cordova-plugin-whitelist"
+    "cordova-plugin-whitelist",
+    {
+      "locator": "https://github.com/jpush/jpush-phonegap-plugin.git",
+      "id": "cn.jpush.phonegap.JPushPlugin"
+    }
   ],
   "cordovaPlatforms": [
     "android",

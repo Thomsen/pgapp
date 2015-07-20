@@ -13,7 +13,7 @@ angular.module('starter.services', ['geoposition'])
         title: "";
         tasks: [];
       }
-    }
+    };
   })
 
   .factory('AlarmTimer', ['$q', 'Data', 'Projects', 'GeopositionService', 'pggeocache', function($q, Data, Projects, GeopositionService, pggeocache) {
@@ -58,7 +58,7 @@ angular.module('starter.services', ['geoposition'])
           console.log("test alarm timer error: " + message);
         });
       }
-    }
+    };
   }])
 
   .factory('Camera', ['$q', function($q) {
@@ -78,7 +78,7 @@ angular.module('starter.services', ['geoposition'])
 
         return q.promise;
       }
-    }
+    };
   }])
 
   .factory('Projects', ['$q', function($q) {
@@ -101,7 +101,7 @@ angular.module('starter.services', ['geoposition'])
           var store = db.createObjectStore("project", {autoIncrement: true});
           var titleIndex = store.createIndex("by_title", "title", {unique: true});
           console.log("initDB 7");
-        }
+        };
         console.log("initDB 4");
         openReq.onsuccess = function(event) {
           //projDB = event.target.result;
@@ -111,12 +111,12 @@ angular.module('starter.services', ['geoposition'])
           };
           setup = false;
           deferq.resolve(true);
-        }
+        };
         console.log("initDB 5");
         openReq.onerror = function(event) {
           console.error("project database error: " + event.target.errorCode);
           deferq.reject(event.toString());
-        }
+        };
         console.log("initDB 6");
         return deferq.promise;
       },
@@ -154,12 +154,12 @@ angular.module('starter.services', ['geoposition'])
               } else {
                 // report(null);
               }
-            }
+            };
             iProject.oncomplete = function(event) {
               q.resolve(projects);
-            }
+            };
           }
-        })
+        });
         return q.promise;
       },
       save: function(projects) {
@@ -182,16 +182,16 @@ angular.module('starter.services', ['geoposition'])
             } else {
               store.put(project);
             }
-          }
+          };
           request.onerror = function() {
-          }
+          };
           console.log("openReqSave 3");
           iProject.oncomplete = function() {
             console.log("project saved");
             q.resolve(true);
-          }
+          };
 
-        })
+        });
         return q.promise;
       },
       newProject: function(projectTitle) {
@@ -206,7 +206,7 @@ angular.module('starter.services', ['geoposition'])
       setLastActiveIndex: function(index) {
         window.localStorage['lastActiveProject'] = index;
       }
-    }
+    };
   }])
 
   .factory("Geolocation", function() {
@@ -245,5 +245,25 @@ angular.module('starter.services', ['geoposition'])
       clearWatch: function() {
         navigator.geolocation.clearWatch(watchID);
       }
-    }
+    };
   })
+
+  .factory('JPushService', ['$http', '$window', '$document', function($http, $window, $document) {
+    var jpushServiceFactory = {};
+
+    var _init = function(config) {
+      $window.plugins.jPushPlugin.init();
+      document.addEventListener('jpush.setTagsWithAlias', config.stwa, false);
+      $window.plugins.openNotificationInAndroidCallback = config.oniac;
+      $window.plugins.jPushPlugin.setDebugMode(true);
+    };
+
+    var _isPushStopped = function(fun) {
+      $window.plugins.jPushPlugin.isPushStopped(fun);
+    };
+
+    jpushServiceFactory.init = _init;
+    jpushServiceFactory.isPushStopped = _isPushStopped;
+
+    return jpushServiceFactory;
+  }]);

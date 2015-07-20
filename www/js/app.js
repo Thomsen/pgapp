@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 pgapp = angular.module('starter', ['ionic', 'ionic-material', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'starter.controllers', 'starter.services', 'starter.routes', 'starter.directives', 'geoposition'])
 
-  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location', 'AlarmTimer', 'GeopositionService',
-        function($ionicPlatform, $ionicPopup, $rootScope, $location, AlarmTimer, GeopositionService) {
+  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location', 'AlarmTimer', 'GeopositionService', 'JPushService',
+        function($ionicPlatform, $ionicPopup, $rootScope, $location, AlarmTimer, GeopositionService, JPushService) {
           $ionicPlatform.ready(function() {
             console.log("ready 1");
 
@@ -26,6 +26,40 @@ pgapp = angular.module('starter', ['ionic', 'ionic-material', 'ngCordova', 'ioni
               window.alert("doesn't support indexeddb");
             } else {
               console.log("support indexedDB");
+            }
+
+            if (window.plugins && window.plugins.jPushPlugin) {
+              /*
+              console.log("jpushplugin init");
+              window.plugins.jPushPlugin.init();
+              window.plugins.jPushPlugin.setDebugMode(true);
+
+              var onGetRegistrationID = function(data) {
+                try {
+                  alert("jpushplugin:registrationID is " + data);
+                } catch (e) {
+                  alert("jpushplugin get id " + e);
+                };
+              };
+              window.plugins.jPushPlugin.getRegistrationID(onGetRegistrationID);
+               */
+              var setTagsWithAliasCallback = function(event) {
+                window.alert('result code: ' + event.resultCode + ' tags: ' + event.tags + ' alias: ' + event.alias);
+              };
+              var openNotificationInAndroidCallback = function(data) {
+                var json = data;
+                window.alert(data);
+                if (typeof data === 'string') {
+                  json = JSON.parse(data);
+                }
+                var id = json.extras['cn.jpush.android.EXTRA'].id;
+                $state.go('detail', {id:id});
+              };
+              var config = {
+                stwa: setTagsWithAliasCallback,
+                oniac: openNotificationInAndroidCallback
+              };
+              JPushService.init(config);
             }
 
             //？
