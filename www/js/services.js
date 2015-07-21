@@ -254,7 +254,7 @@ angular.module('starter.services', ['geoposition'])
     var _init = function(config) {
       $window.plugins.jPushPlugin.init();
       document.addEventListener('jpush.setTagsWithAlias', config.stwa, false);
-      $window.plugins.openNotificationInAndroidCallback = config.oniac;
+      $window.plugins.jPushPlugin.openNotificationInAndroidCallback = config.oniac;
       $window.plugins.jPushPlugin.setDebugMode(true);
     };
 

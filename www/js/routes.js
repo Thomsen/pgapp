@@ -49,8 +49,17 @@ angular.module('starter.routes', [])
 
       .state('home', {
         url: '/ahome',
-        templateUrl: 'fst-home.html',
+        templateUrl: 'fst-home.html'
       })
+      .state('detail', {
+        url: '/detail?id',
+        views: {
+          'mainContainer': {
+            templateUrl: 'templates/detail.html',
+            controller: 'JPushController'
+          }
+        }
+      });
     $urlRouterProvider.otherwise('/home');
   }])
 

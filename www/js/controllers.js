@@ -303,4 +303,9 @@ angular.module('starter.controllers', [])
           console.log("http error " + status);
         });
     };
+  })
+
+  .controller('JPushController', function($scope, $stateParams) {
+    var id = $stateParams.id;
+    $scope.message = "message id : " + id;
   });

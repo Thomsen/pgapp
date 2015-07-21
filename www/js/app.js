@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 pgapp = angular.module('starter', ['ionic', 'ionic-material', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'starter.controllers', 'starter.services', 'starter.routes', 'starter.directives', 'geoposition'])
 
-  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location', 'AlarmTimer', 'GeopositionService', 'JPushService',
-        function($ionicPlatform, $ionicPopup, $rootScope, $location, AlarmTimer, GeopositionService, JPushService) {
+  .run(['$ionicPlatform', '$ionicPopup', '$rootScope', '$location', '$state', 'AlarmTimer', 'GeopositionService', 'JPushService',
+        function($ionicPlatform, $ionicPopup, $rootScope, $location, $state, AlarmTimer, GeopositionService, JPushService) {
           $ionicPlatform.ready(function() {
             console.log("ready 1");
 
@@ -52,7 +52,9 @@ pgapp = angular.module('starter', ['ionic', 'ionic-material', 'ngCordova', 'ioni
                 if (typeof data === 'string') {
                   json = JSON.parse(data);
                 }
-                var id = json.extras['cn.jpush.android.EXTRA'].id;
+                //var id = json.extras['cn.jpush.android.EXTRA'].id;
+                var id = json.extras['cn.jpush.android.MSG_ID'];
+                window.alert(id);
                 $state.go('detail', {id:id});
               };
               var config = {
