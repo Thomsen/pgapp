@@ -1,3 +1,4 @@
+<!-- 
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,3 +16,385 @@
   <script src="build/app.js">
   </script>
 </html>
+-->
+
+<!-- demo2 
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="lib/react.js"></script>
+    <script src="lib/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/jsx">
+      var names = ['Alice', 'Emily', 'Kate'];
+
+      React.render(
+        <div>
+        {
+          names.map(function (name) {
+            return <div>Hello, {name}!</div>
+          })
+        }
+        </div>,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
+-->
+
+<!-- var CommentBox = React.createClass({
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList />
+        <CommentForm />
+      
+</div>
+    );
+  }
+});
+
+<html>
+<head>
+<script src="lib/react.js"></script>
+<script src="lib/JSXTransformer.js"></script>
+</head>
+<body>
+<div id="example"></div>
+<script type="text/jsx">
+   var arr = [
+      <h1>hello world!</h1>,
+<h2>try it</h2>,
+];
+React.render(
+<div>{arr}</div>,
+document.getElementById('example')
+)
+</script>
+</body>
+</html>
+-->
+
+<!-- 
+<html>
+  <head>
+    <script src="lib/react.js"></script>
+<script src="lib/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <script type="text/jsx">
+      var NotesList = React.createClass({
+        render: function() {
+          return (
+            <ol>
+              {
+                this.props.children.map(function (child) {
+                  return <li>{child}</li>
+                })
+              }
+            </ol>
+          );
+        }
+      });
+
+      React.render(
+        <NotesList>
+          <span>hello</span>
+          <span>world</span>
+        </NotesList>,
+        document.body
+      );
+    </script>
+  </body>
+-->
+
+<!-- 
+<html>
+  <head>
+    <script src="lib/react.js"></script>
+    <script src="lib/JSXTransformer.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/jsx">
+var MyComponent = React.createClass({
+  handleClick: function() {
+    React.findDOMNode(this.refs.myTextInput).focus();
+  },
+  render: function() {
+    return (
+      <div>
+        <input type="text" ref="myTextInput" />
+        <input type="button" value="Focus the text input" onClick={this.handleClick} />
+      </div>
+    );
+  }
+});
+
+React.render(
+  <MyComponent />,
+  document.getElementById('example')
+);
+    </script>
+  </body>
+</html>
+ -->
+
+<!-- 
+<html>
+  <head>
+    <script src="lib/react.js"></script>
+<script src="lib/JSXTransformer.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+  </head>
+  <body>
+  <div id="example"></div>
+    <script type="text/jsx">
+
+var data = [
+  {author: "Pete Hunt", text: "This is one comment"},
+  {author: "Jordan Walke", text: "This is two comment"},
+{author: "Pete Hunt2", text: "This is one comment"},
+  {author: "Jordan Walke2", text: "This is two comment"},
+{author: "Pete Hunt", text: "This is one comment"},
+  {author: "Jordan Walke", text: "This is two comment"},
+{author: "Pete Hunt2", text: "This is one comment"},
+  {author: "Jordan Walke2", text: "This is two comment"}
+];
+
+var CommentBox = React.createClass({
+  loadCommentsFromServer: function() {
+    
+$.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  handleCommentSubmit: function(comment) {
+    // TODO: submit to the server and refresh the list
+var comments = this.state.data;
+    var newComments = comments.concat([comment]);
+    this.setState({data: newComments});
+ $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+getInitialState: function() {
+    return {data: []};
+  },
+  componentDidMount: function() {
+    this.loadCommentsFromServer();
+    setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+  
+},
+  render: function() {
+    return (
+      <div className="commentBox">
+        <h1>Comments</h1>
+        <CommentList data={this.state.data} />
+        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+      </div>
+    );
+  }
+});
+var CommentList = React.createClass({
+  render: function() {
+    var commentNodes = this.props.data.map(function (comment) {
+      return (
+        <Comment author={comment.author}>
+          {comment.text}
+        </Comment>
+      );
+    });
+    
+return (
+      <div className="commentList">
+        {commentNodes}
+      
+</div>
+    );
+  }
+});
+
+var CommentForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var author = this.refs.author.getDOMNode().value.trim();
+    var text = this.refs.text.getDOMNode().value.trim();
+    if (!text || !author) {
+      return;
+    }
+    // TODO: send request to the server
+ this.props.onCommentSubmit({author: author, text: text});
+    this.refs.author.getDOMNode().value = '';
+    this.refs.text.getDOMNode().value = '';
+    return;
+  },
+  
+render: function() {
+    return (
+      <form className="commentForm" onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="Your name" ref="author" />
+        <input type="text" placeholder="Say something..." ref="text" />
+        <input type="submit" value="Post" />
+      
+</form>
+    );
+  }
+});
+
+var Comment = React.createClass({
+  render: function() {
+    return (
+      <div className="comment" >
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        {this.props.children}
+      </div>
+    );
+  }
+});
+
+React.render(
+ <CommentBox url="comments.json" pollInterval={2000} />,
+document.body
+
+);
+
+    </script>
+  </body>
+-->
+
+<html>
+  <head>
+  <meta charset="UTF-8">
+    <script src="lib/react.js"></script>
+<script src="lib/JSXTransformer.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+
+<link rel="stylesheet" href="css/mylist.css">
+  </head>
+  <body>
+  
+  <div id="example"></div>
+   <div id="example1"></div>
+        <script type="text/jsx">
+
+var data = [
+  {author: "Pete Hunt", text: "This is one comment"},
+  {author: "Jordan Walke", text: "This is two comment"},
+{author: "Pete Hunt2", text: "This is one comment"},
+  {author: "Jordan Walke2", text: "This is two comment"},
+{author: "Pete Hunt", text: "This is one comment"},
+  {author: "Jordan Walke", text: "This is two comment"},
+{author: "Pete Hunt2", text: "This is one comment"},
+  {author: "Jordan Walke2", text: "This is two comment"}
+];
+
+
+var Comment = React.createClass({
+ handlerJump:function(){
+		  window.location.href='test.html';
+	  },
+handleAdd: function() {
+		alert('按钮被点了一下');
+	  },
+  render: function() {
+    return (
+      <li className="item" onClick={this.handlerJump}>
+<div className="item-l"><div className="fl"> <img src="images/header.jpg" className="avatar"/></div>
+ <div className="item-r">
+   <div className="msg"><strong>name</strong><span>{new Date().toLocaleString()}</span></div>
+   <div className="content"> {this.props.children}</div>
+ </div>
+</div>
+<div className="mybtns"><button className="mybtn" onClick={this.handleAdd}>按钮</button></div>
+      </li>
+    );
+  }
+});
+
+var CommentList = React.createClass({
+  render: function() {
+    var commentNodes = this.props.data.map(function (comment) {
+      return (
+        <Comment author={comment.author}>
+          {comment.text}
+        </Comment>
+      );
+    });
+    
+return (
+      <div className="commentList">
+        {commentNodes}
+      
+</div>
+    );
+  }
+});
+
+var CommentBox = React.createClass({
+  render: function() {
+    return (
+      <div className="commentBox">
+        <CommentList data={this.props.data} />
+      </div>
+    );
+  }
+});
+
+React.render(
+  <CommentBox data={data} />,
+  
+document.getElementById('example1')
+);
+
+
+    </script>
+  </body>
+  <script type="text/jsx" src="js/mylist.js" charset="UTF-8"></script>
+  </html>
+
+  
+ <!--  
+  <html>
+  <head>
+    <script src="lib/react.js"></script>
+<script src="lib/JSXTransformer.js"></script>
+<script src="lib/react-with-addons.js"></script>
+<script src="lib/react-with-addons.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+
+<link rel="stylesheet" href="css/trans.css">
+
+  </head>
+  <body>
+  <div id="example"></div>
+    <script type="text/jsx">
+
+
+    </script>
+  </body>
+  <script type="text/jsx" src="js/transitionGroup.js" charset="UTF-8"></script>
+  </html>
+  -->
