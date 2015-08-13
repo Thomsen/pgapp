@@ -3,6 +3,7 @@
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0",
+    "ionicons": "driftyco/ionicons#*",
     "ionic-material": "zachsoft/Ionic-Material#0.4.2",
     "ngCordova": "driftyco/ng-cordova#0.1.17-alpha",
     "ionic-service-core": "driftyco/ionic-service-core#*",
