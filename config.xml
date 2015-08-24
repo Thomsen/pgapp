@@ -23,19 +23,12 @@
     <icon src="resources\android\icon\drawable-xhdpi-icon.png" density="xhdpi"/>
   </platform>
   <platform name="android">
-    <splash src="resources\android\icon\drawable-ldpi-icon.png" density="land-ldpi"/>
-    <splash src="resources\android\icon\drawable-mdpi-icon.png" density="land-mdpi"/>
-    <splash src="resources\android\icon\drawable-hdpi-icon.png" density="land-hdpi"/>
-    <splash src="resources\android\icon\drawable-xhdpi-icon.png" density="land-xhdpi"/>
+    <splash src="resources\android\prevload.png" density="land-ldpi"/>
 
-    <splash src="resources\android\icon\drawable-ldpi-icon.png" density="port-ldpi"/>
-    <splash src="resources\android\icon\drawable-mdpi-icon.png" density="port-mdpi"/>
-    <splash src="resources\android\icon\drawable-hdpi-icon.png" density="port-hdpi"/>
-    <splash src="resources\android\icon\drawable-xhdpi-icon.png" density="port-xhdpi"/>
+    <splash src="resources\android\prevload.png" density="port-ldpi"/>
   </platform>
   <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
 
   <preference name="SplashScreen" value="screen" />
   <preference name="SplashScreenDelay" value="3000" />
-  
 </widget>
