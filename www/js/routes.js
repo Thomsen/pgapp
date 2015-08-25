@@ -51,6 +51,10 @@ angular.module('starter.routes', [])
         url: '/ahome',
         templateUrl: 'fst-home.html'
       })
+      .state('modal', {
+        url: '/modal',
+        templateUrl: 'templates/modal.html'
+      })
       .state('detail', {
         url: '/detail?id',
         views: {

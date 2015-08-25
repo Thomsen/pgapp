@@ -224,7 +224,7 @@ angular.module('starter.controllers', [])
     console.log("TodoCtrl 0");
   })
 
-  .controller('AboutController', function($scope, $rootScope, $ionicUser, $ionicPush) {
+  .controller('AboutController', function($scope, $rootScope, $ionicUser, $ionicPush, $state) {
     $scope.identifyUser = function() {
       console.log("ionic user: identifying with ionic user service");
       var user = $ionicUser.get();
@@ -260,9 +260,10 @@ angular.module('starter.controllers', [])
       console.log('ionic push: got token ', data.token, data.platform);
       $scope.token = data.token;
     });
+
   })
 
-  .controller('SettingsController', function($scope, $http) {
+  .controller('SettingsController', function($scope, $http, $ionicModal) {
     $scope.expanders = [{
       title: 'expander 1',
       text: 'expander text 1'
@@ -273,6 +274,10 @@ angular.module('starter.controllers', [])
       title: 'expander 3',
       text: 'expander test 3'
     }];
+
+    $scope.user = {
+
+    };
     $scope.login = function(user) {
       /*
        $http({method: 'POST',
@@ -310,6 +315,26 @@ angular.module('starter.controllers', [])
           console.log("http error " + status);
         });
     };
+
+    $ionicModal.fromTemplateUrl('templates/modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+    });
+
+    $scope.openModal = function() {
+      $scope.modal.show();
+    };
+
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+
   })
 
   .controller('JPushController', function($scope, $stateParams) {
