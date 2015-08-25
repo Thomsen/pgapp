@@ -8,5 +8,8 @@
     "ngCordova": "driftyco/ng-cordova#0.1.17-alpha",
     "ionic-service-core": "driftyco/ionic-service-core#*",
     "ionic-service-push-client": "driftyco/ionic-service-push-client#*"
+  },
+  "dependencies": {
+    "firebase": "~2.2.9"
   }
 }

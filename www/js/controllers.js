@@ -189,6 +189,13 @@ angular.module('starter.controllers', [])
       });
       $scope.taskModal.hide();
       Projects.openReqSave($scope.activeProject);
+      var fireDataRef = new Firebase('https://pgapp.firebaseio.com');
+      fireDataRef.set(angular.toJson($scope.activeProject));
+
+      fireDataRef.on('child_added', function(snapshot) {
+        var project = snapshot.val();
+        console.log(project);
+      });
 
       task.title = "";
       task.lastPhoto = "";
