@@ -140,7 +140,7 @@ angular.module('starter.controllers', [])
     }, 1000);
   })
 
-  .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, Data, Projects, Geolocation) {
+  .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, $ionicActionSheet, Data, Projects, Geolocation) {
 
     /*
      var i = 0;
@@ -210,6 +210,20 @@ angular.module('starter.controllers', [])
     $scope.taskClick = function(task) {
       toast.showShort("task " + task.title + " click ." );
       Geolocation.watchLoc();
+    };
+
+    $scope.showDetails = function() {
+      $ionicActionSheet.show({
+        buttons: [
+          {text: 'Complete'}
+        ],
+        destructiveText: 'Delete',
+        titleText: 'Update Todo',
+        cancelText: 'Cancel',
+        buttonClicked: function(index) {
+          return true;
+        }
+      });
     };
 
     $scope.refreshTask = function() {

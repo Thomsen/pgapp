@@ -6,7 +6,7 @@
     </button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
-    <button class="button button-icon icon ion-compose" ng-click="newTask()">
+    <button class="button button-icon icon ion-compose" id="new-task" ng-click="newTask()">
     </button>
   </ion-nav-buttons>
 
@@ -15,7 +15,7 @@
     </ion-refresher>
 
     <ion-list>
-      <ion-item ng-repeat="task in activeProject.tasks" ng-click="taskClick(task)">
+      <ion-item ng-repeat="task in activeProject.tasks" ng-click="taskClick(task)" on-hold="showDetails() ui-sref='({taskId: task.id})" ng-class="({done: task.done})">
         {{task.title}}
         <img ng-src="{{task.lastPhoto}}", style="max-width: 100%" />
       </ion-item>
