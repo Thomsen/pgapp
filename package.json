@@ -36,7 +36,8 @@
     },
     "cordova-plugin-whitelist",
     "cordova-plugin-okhttp",
-    "cordova-plugin-statusbar"
+    "cordova-plugin-statusbar",
+    "nl.x-services.plugins.toast"
   ],
   "cordovaPlatforms": [
     "android",

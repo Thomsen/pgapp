@@ -117,27 +117,30 @@ angular.module('starter.controllers', [])
       $location.path("/home");
     };
 
-    $timeout(function() {
-      Projects.openReqAll().then(function(projects) {
-        $scope.projects = projects;
-        if ($scope.projects.length == 0) {
-          while (true) {
-            var projectTitle = prompt("Your first project title: ");
-            if (projectTitle) {
-              createProject(projectTitle);
-              break;
+    if ($location.path() == '/home') {
+      // first tabhost execute
+      $timeout(function() {
+        Projects.openReqAll().then(function(projects) {
+          $scope.projects = projects;
+          if ($scope.projects.length == 0) {
+            while (true) {
+              var projectTitle = prompt("Your first project title: ");
+              if (projectTitle) {
+                createProject(projectTitle);
+                break;
+              }
             }
+          } else {
+            var index = Projects.getLastActiveIndex();
+            $scope.selectProject($scope.projects[index], index);
           }
-        } else {
-          var index = Projects.getLastActiveIndex();
-          $scope.selectProject($scope.projects[index], index);
-        }
-        // test interval timer
-        //AlarmTimer.testTimer();
-        // test alarm timer
-        //AlarmTimer.testAlarmTimer();
-      });
-    }, 1000);
+          // test interval timer
+          //AlarmTimer.testTimer();
+          // test alarm timer
+          //AlarmTimer.testAlarmTimer();
+        });
+      }, 1000);
+    }
   })
 
   .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, $ionicActionSheet, Data, Projects, Geolocation) {
@@ -208,7 +211,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.taskClick = function(task) {
-      toast.showShort("task " + task.title + " click ." );
+      window.plugins.toast.showShortBottom("task " + task.title + " click ." );
       Geolocation.watchLoc();
     };
 
