@@ -10,6 +10,7 @@
     "ionic-service-push-client": "driftyco/ionic-service-push-client#*"
   },
   "dependencies": {
+    "angularfire": "~1.1.2",
     "firebase": "~2.2.9"
   }
 }

@@ -266,4 +266,20 @@ angular.module('starter.services', ['geoposition'])
     jpushServiceFactory.isPushStopped = _isPushStopped;
 
     return jpushServiceFactory;
-  }]);
+  }])
+
+  .factory('FirebaseAuth', function($firebaseAuth) {
+    var userRef = new Firebase('https://pgapp.firebaseio.com/users');
+    return $firebaseAuth(userRef);
+  })
+
+  .factory('FirebaseProject', function($firebaseArray) {
+    var dataRef = new Firebase('https://pgapp.firebaseio.com');
+    dataRef.on('child_added', function(snapshot) {
+      var result = snapshot.val();
+      console.log("firebase child add: " + angular.toJson(result));
+    });
+
+    return $firebaseArray(dataRef);
+
+  });

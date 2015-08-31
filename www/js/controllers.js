@@ -87,10 +87,11 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $location, $timeout, Projects, AlarmTimer) {
+  .controller('ProjectController', function($scope, $ionicSideMenuDelegate, $location, $timeout, Projects, AlarmTimer, FirebaseProject) {
 
     var createProject = function(projectTitle) {
       var newProject = Projects.newProject(projectTitle);
+      FirebaseProject.$add(newProject);
       Projects.openReqSave(newProject).then(function(isSuccess) {
         console.log("createProject 1");
         if (isSuccess) {
@@ -143,7 +144,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, $ionicActionSheet, Data, Projects, Geolocation) {
+  .controller('TaskController', function($scope, $timeout, $ionicModal, $ionicSideMenuDelegate, $ionicActionSheet, Data, Projects, Geolocation, FirebaseProject) {
 
     /*
      var i = 0;
@@ -186,19 +187,21 @@ angular.module('starter.controllers', [])
       if (!$scope.activeProject || !task) {
         return ;
       }
+
+      if ($scope.lastPhoto) {
+        task.lastPhoto = $scope.lastPhoto;
+      }
+
       $scope.activeProject.tasks.push({
         title: task.title,
-        lastPhoto: $scope.lastPhoto
+        lastPhoto: task.lastPhoto
       });
+
+      //FirebaseProject.$getRecord($scope.activeProject.title).$add(task);
+      FirebaseProject.$add(task);
+
       $scope.taskModal.hide();
       Projects.openReqSave($scope.activeProject);
-      var fireDataRef = new Firebase('https://pgapp.firebaseio.com');
-      fireDataRef.set(angular.toJson($scope.activeProject));
-
-      fireDataRef.on('child_added', function(snapshot) {
-        var project = snapshot.val();
-        console.log(project);
-      });
 
       task.title = "";
       task.lastPhoto = "";
