@@ -245,6 +245,32 @@ angular.module('starter.controllers', [])
   })
 
   .controller('AboutController', function($scope, $rootScope, $ionicUser, $ionicPush, $state) {
+
+    $scope.$on('$ionicView.loaded', function() {
+      console.log('ion view loaded');
+    });
+    $scope.$on('$ionicView.enter', function() {
+      console.log('ion view enter');
+    });
+    $scope.$on('$ionicView.leave', function() {
+      console.log('ion view leave');
+    });
+    $scope.$on('$ionicView.beforeEnter', function() {
+      console.log('ion view before enter');
+    });
+    $scope.$on('$ionicView.beforeLeave', function() {
+      console.log('ion view before leave');
+    });
+    $scope.$on('$ionicView.afterEnter', function() {
+      console.log('ion view after enter');
+    });
+    $scope.$on('$ionicView.afterLeave', function() {
+      console.log('ion view after leave');
+    });
+    $scope.$on('$ionicView.unloaded', function() {
+      console.log('ion view unloaded');
+    });
+
     $scope.identifyUser = function() {
       console.log("ionic user: identifying with ionic user service");
       var user = $ionicUser.get();
