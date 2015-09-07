@@ -16,6 +16,7 @@
     "gulp-connect": "^2.2.0",
     "gulp-util": "^2.2.14",
     "gulp-webpack": "^1.5.0",
+    "http-server": "^0.8.0",
     "jsx-loader": "^0.13.2",
     "shelljs": "^0.3.0",
     "webpack": "^1.12.1"
@@ -41,5 +42,4 @@
     "serve": "./node_modules/.bin/http-server -p 8080",
     "dev": "webpack-dev-server --progress --colors --port 8090"
   }
-
 }
