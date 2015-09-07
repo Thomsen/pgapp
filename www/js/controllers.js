@@ -172,7 +172,7 @@ angular.module('starter.controllers', [])
       $scope.activeProject = activeProject;
     });
 
-    $ionicModal.fromTemplateUrl('task-new.html', function(modal) {
+    $ionicModal.fromTemplateUrl('templates/task-new.html', function(modal) {
       $scope.taskModal = modal;
     }, {
       scope: $scope,

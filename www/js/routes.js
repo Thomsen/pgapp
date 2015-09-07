@@ -5,17 +5,17 @@ angular.module('starter.routes', [])
       .state('root', {
         url: '/',
         abstract: true,
-        templateUrl: 'layout-sidemenu.html'
+        templateUrl: 'templates/layout/layout-sidemenu.html'
       })
       .state('root.home', {
         url: 'home',
         views: {
           'side-left': {
-            templateUrl: 'index-left.html',
+            templateUrl: 'templates/main/index-left.html',
             controller: 'ProjectController'
           },
           'side-content': {
-            templateUrl: 'index-home.html',
+            templateUrl: 'templates/main/index-home.html',
             controller: 'TaskController'
           }
         }
@@ -24,11 +24,11 @@ angular.module('starter.routes', [])
         url: 'about',
         views: {
           'side-left': {
-            templateUrl: 'index-left.html',
+            templateUrl: 'templates/main/index-left.html',
             controller: 'ProjectController'
           },
           'side-content': {
-            templateUrl: 'index-about.html',
+            templateUrl: 'templates/main/index-about.html',
             controller: 'AboutController'
           }
         }
@@ -37,11 +37,11 @@ angular.module('starter.routes', [])
         url: 'settings',
         views: {
           'side-left': {
-            templateUrl: 'index-left.html',
+            templateUrl: 'templates/main/index-left.html',
             controller: 'ProjectController'
           },
           'side-content': {
-            templateUrl: 'index-settings.html',
+            templateUrl: 'templates/main/index-settings.html',
             controller: 'SettingsController'
           }
         }
@@ -49,7 +49,7 @@ angular.module('starter.routes', [])
 
       .state('home', {
         url: '/ahome',
-        templateUrl: 'fst-home.html'
+        templateUrl: 'templates/fst-home.html'
       })
       .state('modal', {
         url: '/modal',
