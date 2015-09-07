@@ -6,10 +6,10 @@ webpackJsonp([0,1],[
 
 	var React = __webpack_require__(1);
 
-	var Comment = __webpack_require__(2);
+	var CommentBox = __webpack_require__(2);
 
 
-	React.renderComponent(React.createElement(Comment, null), document.getElementById('example1'));
+	React.render(React.createElement(CommentBox, null), document.getElementById('example1'));
 
 
 /***/ },
@@ -22,19 +22,7 @@ webpackJsonp([0,1],[
 /* 2 */
 /***/ function(module, exports) {
 
-	/** @jsx React.DOM$harmony */var data = [
-	  {author: "Pete Hunt", text: "This is one comment"},
-	  {author: "Jordan Walke", text: "This is two comment"},
-	  {author: "Pete Hunt2", text: "This is one comment"},
-	  {author: "Jordan Walke2", text: "This is two comment"},
-	  {author: "Pete Hunt", text: "This is one comment"},
-	  {author: "Jordan Walke", text: "This is two comment"},
-	  {author: "Pete Hunt2", text: "This is one comment"},
-	  {author: "Jordan Walke2", text: "This is two comment"}
-	];
-
-
-	var Comment = React.createClass({displayName: "Comment",
+	/** @jsx React.DOM$harmony */var Comment = React.createClass({displayName: "Comment",
 	  handlerJump:function(){
 	    window.location.href='test.html';
 	  },
@@ -46,7 +34,7 @@ webpackJsonp([0,1],[
 	        React.createElement("li", {className: "item", onClick: this.handlerJump}, 
 	        React.createElement("div", {className: "item-l"}, React.createElement("div", {className: "fl"}, " ", React.createElement("img", {src: "images/header.jpg", className: "avatar"})), 
 	        React.createElement("div", {className: "item-r"}, 
-	        React.createElement("div", {className: "msg"}, React.createElement("strong", null, "name"), React.createElement("span", null, new Date().toLocaleString())), 
+	        React.createElement("div", {className: "msg"}, React.createElement("strong", null, this.props.author), React.createElement("span", null, new Date().toLocaleString())), 
 	        React.createElement("div", {className: "content"}, " ", this.props.children)
 	        )
 	        ), 
@@ -58,13 +46,15 @@ webpackJsonp([0,1],[
 
 	var CommentList = React.createClass({displayName: "CommentList",
 	  render: function() {
-	    var commentNodes = this.props.data.map(function (comment) {
-	      return (
-	          React.createElement(Comment, {author: comment.author}, 
-	          comment.text
-	        )
-	      );
-	    });
+	    if (this.props.data) {
+	      var commentNodes = this.props.data.map(function (comment) {
+	        return (
+	            React.createElement(Comment, {author: comment.author}, 
+	            comment.text
+	          )
+	        );
+	      });
+	    }
 
 	    return (
 	        React.createElement("div", {className: "commentList"}, 
@@ -76,10 +66,33 @@ webpackJsonp([0,1],[
 	});
 
 	var CommentBox = React.createClass({displayName: "CommentBox",
+	  getInitialState: function() {
+	    return {data: [{author: "", text: ""}]};
+	  },
+	  getComments: function() {
+	    var success = function() {
+	      var data = [
+	        {author: "Pete Hunt", text: "This is one comment"},
+	        {author: "Jordan Walke", text: "This is two comment"},
+	        {author: "Pete Hunt2", text: "This is one comment"},
+	        {author: "Jordan Walke2", text: "This is two comment"},
+	        {author: "Pete Hunt", text: "This is one comment"},
+	        {author: "Jordan Walke", text: "This is two comment"},
+	        {author: "Pete Hunt2", text: "This is one comment"},
+	        {author: "Jordan Walke2", text: "This is two comment"}
+	      ];
+	      this.setState({data: data});
+	    }.bind(this);
+	    setTimeout(success, 100);
+	  },
+	  componentWillMount: function() {
+	    this.getComments();
+	  },
 	  render: function() {
 	    return (
 	        React.createElement("div", {className: "commentBox"}, 
-	        React.createElement(CommentList, {data: this.props.data})
+	        /*<CommentList data={this.props.data} />*/
+	        React.createElement(CommentList, {data: this.state.data})
 	        )
 	    );
 	  }

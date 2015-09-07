@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Comment = require('./js/comment');
+var CommentBox = require('./js/comment');
 
 
-React.renderComponent(<Comment />, document.getElementById('example1'));
+React.render(<CommentBox />, document.getElementById('example1'));
