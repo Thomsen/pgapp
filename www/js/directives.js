@@ -1,5 +1,35 @@
 angular.module('starter.directives', [])
 
+  .directive('formItem', function() {
+    return {
+      restrict: 'E',
+      template: '<form name="GenForm">',
+      replace: true,
+      link: function(scope, element, attrs) {
+        var genHtml = {
+          id_singleLine: function(o) {
+            return "<div></div>";
+          }
+        };
+      }
+    };
+  })
+
+  .directive('formAuto', function() {
+    return {
+      restrict: 'E',
+      scope: {
+        data: '=data',
+        formValue: '='
+      },
+      templateUrl: 'templates/field.html',
+      link: function(scope, element, attrs) {
+
+      },
+      replace: true
+    };
+  })
+
   .directive('hello', function() {
     return {
       restrict: 'E', // E 元素 A 属性 C 样式类 M 注释
@@ -28,9 +58,9 @@ angular.module('starter.directives', [])
         scope.toggle = function toggle() {
           scope.showMe = !scope.showMe;
           accordionController.gotOpened(scope);
-        }
+        };
       }
-    }
+    };
   })
 
   .directive('accordion', function() {
@@ -47,10 +77,10 @@ angular.module('starter.directives', [])
               expander.showMe = false;
             }
           });
-        }
+        };
         this.addExpander = function(expander) {
           expanders.push(expander);
-        }
+        };
       }
-    }
+    };
   });

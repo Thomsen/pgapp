@@ -1,0 +1,11 @@
+<form action="">
+  <!-- <p>data: {{ data }}</p> -->
+  <!-- <p> form value: {{ formValue }}</p> -->
+  <div ng-model="formValue" ng-repeat="item in data">
+    <!-- <p> item class: {{ item.class }} </p> -->
+    <div class="item-input" id="{{ item.colName }}" ng-if="item.class == 'id_singleLine'">
+      <span class="input-label">{{ item.name }}</span>
+      <input name="singleLine" type="text" value="" ng-model="fv.value" ng-repeat="fv in formValue | filter: item.colName" ng-required="{{ item.required }}" placeholder="请输入{{ item.name }}"/>
+    </div>
+  </div>
+</form>

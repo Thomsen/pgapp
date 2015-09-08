@@ -1,16 +1,16 @@
 geoposition = angular.module('geoposition', []);
 
-geoposition.controller('GeopositionController', function($scope, $timeout, GeopositionService, rwcgeocache) {
+geoposition.controller('GeopositionController', function($scope, $timeout, GeopositionService, pggeocache) {
   var timer = $timeout(function() {
     // 页面显示最近坐标
-    $scope.longitude = rwcgeocache.longitude;
-    $scope.latitude = rwcgeocache.latitude;
+    $scope.longitude = pggeocache.longitude;
+    $scope.latitude = pggeocache.latitude;
     console.log("geo timer 1");
   }, 5000);
 
   $timeout(function() {
-    rwcgeocache.longitude = 180;
-    rwcgeocache.latitude = 90;
+    pggeocache.longitude = 180;
+    pggeocache.latitude = 90;
     console.log("geo timer 2");
   }, 6000);
 
@@ -21,8 +21,8 @@ geoposition.controller('GeopositionController', function($scope, $timeout, Geopo
   var updateView = function() {
     $scope.clock.now = new Date();
     console.log("geo timer 3");
-    $scope.longitude = rwcgeocache.longitude;
-    $scope.latitude = rwcgeocache.latitude;
+    $scope.longitude = pggeocache.longitude;
+    $scope.latitude = pggeocache.latitude;
   };
 
   setInterval(function() {

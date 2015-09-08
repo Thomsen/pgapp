@@ -55,6 +55,18 @@ angular.module('starter.routes', [])
         url: '/modal',
         templateUrl: 'templates/modal.html'
       })
+      .state('test', {
+        url: '/test',
+        templateUrl: 'templates/test.html'
+      })
+      .state('form', {
+        params: {
+          data: null
+        },
+        url: '/form',
+        templateUrl: 'templates/form.html',
+        controller: 'FormController'
+      })
       .state('detail', {
         url: '/detail?id',
         views: {
@@ -74,4 +86,4 @@ angular.module('starter.routes', [])
 
   .config(function($compileProvider) {
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-  })
+  });
