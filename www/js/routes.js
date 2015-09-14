@@ -59,6 +59,10 @@ angular.module('starter.routes', [])
         url: '/test',
         templateUrl: 'templates/test.html'
       })
+      .state('map', {
+        url: '/map',
+        templateUrl: 'templates/map.html'
+      })
       .state('form', {
         params: {
           data: null
