@@ -24,7 +24,6 @@
     "cordova-plugin-device",
     "cordova-plugin-camera",
     "cordova-plugin-geolocation",
-    "cordova-plugin-sqlite",
     "cordova-plugin-toast",
     "cordova-plugin-splashscreen",
     "com.chariotsolutions.toast.plugin",
@@ -37,7 +36,8 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-okhttp",
     "cordova-plugin-statusbar",
-    "nl.x-services.plugins.toast"
+    "nl.x-services.plugins.toast",
+    "cordova-sqlite-storage"
   ],
   "cordovaPlatforms": [
     "android",
