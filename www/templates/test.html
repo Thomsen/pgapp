@@ -27,6 +27,15 @@
       </button>
 
       <button ui-sref="map">map</button>
+
+      <button ng-click="sqlite()">
+        sqlite
+      </button>
+
+      <div ng-repeat="item in items">
+        <p>{{item.title}} : {{item.date}}</p>
+      </div>
+
       <div>
         <p>
           cordova platformId: {{ cplatformId }}

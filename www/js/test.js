@@ -95,6 +95,70 @@ angular.module('test', [])
       });
     };
 
+    var db;
+    $scope.sqlite = function() {
+      if (window.sqlitePlugin) {
+        if (!db) {
+         db  = window.sqlitePlugin.openDatabase("test.db");
+        }
+
+        db.transaction(function(tx) {
+          tx.executeSql("create table if not exists t_event(_id integer primary key, title text, date text);");
+          tx.executeSql("create table if not exists t_template(_id integer primary key, name text, version text);");
+        });
+
+        var inser = function(title, date) {
+          db.transaction(function(tx) {
+            console.log("inser 1");
+            tx.executeSql("insert into t_event(title, date) values(?, ?);", [title, date], function(txx, res) {
+              find(txx);
+            });
+            console.log("inser 2");
+            tx.executeSql("insert into t_template(name, version) values(?, ?);" ["inser", date], function(tx, res) {
+              
+            });
+          });
+        };
+
+        var insertmpl = function(name, date) {
+          db.transaction(function(tx) {
+            console.log("name: " + name + " date: " + date);
+            tx.executeSql("insert into t_template(name, version) values(?, ?);" ["insertmpl", date], function(tx, res) {
+              
+            });
+          });
+        };
+
+        var find = function(tx) {
+          //db.transaction(function(tx) {
+          tx.executeSql("select * from t_event;", [], function(tx, res) {
+            console.log("t_event " + angular.toJson(res));
+            console.log("t_event " + angular.toJson(res.rows));
+            console.log("t_event " + angular.toJson(res.rows.item(0)));
+            if (res) {
+              var len = res.rows.length;
+              var results = [];
+              for (var i=0; i<len; i++) {
+                results.push(res.rows.item(i));
+              }
+              console.log("results " + angular.toJson(results));
+              $scope.items = results;
+            }
+            //});
+          });
+        };
+
+        var title, date;
+        var i = 0;
+        // for (var i=0; i<100; i++) {
+        title = "title " + i;
+        date = angular.toJson(new Date());
+        inser(title, date);
+        insertmpl(title, date);
+        //}
+      }
+    };
+
     $scope.filetest = function() {
       write("test cordova plugin file", directory, filename);
     };
