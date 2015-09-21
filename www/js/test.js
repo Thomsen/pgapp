@@ -5,7 +5,7 @@ angular.module('test', [])
       $scope.map = map;
     };
   })
-  .controller('TestController', function($scope, $state) {
+  .controller('TestController', function($scope, $state, $cordovaSQLite) {
     $scope.gotest = function () {
       $state.go('patrol'); // ui-sref="root.main" ui-sref-opts="{reload: false}"
     };
@@ -97,11 +97,12 @@ angular.module('test', [])
 
     var db;
     $scope.sqlite = function() {
+      console.log("---------sqlite start exec-------------");
       if (window.sqlitePlugin) {
         if (!db) {
          db  = window.sqlitePlugin.openDatabase("test.db");
         }
-
+        console.log(" ------- db transaction ---------");
         db.transaction(function(tx) {
           tx.executeSql("create table if not exists t_event(_id integer primary key, title text, date text);");
           tx.executeSql("create table if not exists t_template(_id integer primary key, name text, version text);");
@@ -109,13 +110,29 @@ angular.module('test', [])
 
         var inser = function(title, date) {
           db.transaction(function(tx) {
-            console.log("inser 1");
-            tx.executeSql("insert into t_event(title, date) values(?, ?);", [title, date], function(txx, res) {
-              find(txx);
+            console.log("inser 1 tx " + angular.toJson(tx));
+            tx.executeSql("insert into t_event(title, date) values(?, ?)", [title, date], function(tx, res) {
+              console.log("inser 3 tx " + angular.toJson(tx));
+              find(tx);
+            }, function(err) {
+              console.log("inser 1 err: " + err.message);
+              return false;
             });
-            console.log("inser 2");
-            tx.executeSql("insert into t_template(name, version) values(?, ?);" ["inser", date], function(tx, res) {
-              
+            console.log("inser 2 tx " + angular.toJson(tx));
+            tx.executeSql("insert into t_template(name, version) values(?, ?);", ["inser", date], function(tx, res) {
+              console.log("inser 4 tx " + angular.toJson(tx));
+            }, function(err) {
+              console.log("inser 2 err: " + err.message);
+              return true;
+            });
+          });
+          db.transaction(function(tx) {
+            console.log("inser 2 tx " + angular.toJson(tx));
+            tx.executeSql("insert into t_template(name, version) values(?, ?)", ["inser", date], function(tx, res) {
+              console.log("inser 4 tx " + angular.toJson(tx));
+            }, function(err) {
+              console.log("inser 2 err: " + err.message);
+              return true;
             });
           });
         };
@@ -123,8 +140,8 @@ angular.module('test', [])
         var insertmpl = function(name, date) {
           db.transaction(function(tx) {
             console.log("name: " + name + " date: " + date);
-            tx.executeSql("insert into t_template(name, version) values(?, ?);" ["insertmpl", date], function(tx, res) {
-              
+            tx.executeSql("insert into t_template(name, version) values(?, ?);", ["insertmpl", date], function(tx, res) {
+
             });
           });
         };
@@ -157,6 +174,41 @@ angular.module('test', [])
         insertmpl(title, date);
         //}
       }
+
+      console.log("-------------sqlite end exec-----------------");
+    };
+
+    $scope.ngsqlite = function() {
+      console.log("---------ngsqlite start exec-------------");
+      if (window.sqlitePlugin) {
+        if (!db) {
+          db = $cordovaSQLite.openDB("test.db");
+        }
+
+        console.log("--------- ngsqlite create table ------");
+        $cordovaSQLite.execute(db, "create table if not exists t_event_ng(_id integer primary key, title text, date text);");
+        $cordovaSQLite.execute(db, "create table if not exists t_template_ng(_id integer primary key, name text, version text);");
+
+        var inser2 = function(title, date) {
+          var insql2 = "insert into t_event_ng(title, date) values(?, ?)";
+          $cordovaSQLite.execute(db, insql2, [title, date]).then(function(res) {
+            console.log("ng inser2 res event " + angular.toJson(res));
+          }, function(err) {
+            console.log(err);
+          });
+          var insql3 = "insert into t_template_ng(name, version) values(?, ?)";
+          $cordovaSQLite.execute(db, insql3, [title, date]).then(function(res) {
+            console.log("ng inser2 res template " + angular.toJson(res));
+          }, function(err) {
+            console.log(err);
+          });
+        };
+
+        console.log("---------- ngsqlite insert date ---------");
+        inser2("title 1", angular.toJson(new Date()));
+
+      }
+      console.log("-------------ngsqlite end exec-----------------");
     };
 
     $scope.filetest = function() {
