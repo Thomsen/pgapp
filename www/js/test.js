@@ -106,6 +106,8 @@ angular.module('test', [])
         db.transaction(function(tx) {
           tx.executeSql("create table if not exists t_event(_id integer primary key, title text, date text);");
           tx.executeSql("create table if not exists t_template(_id integer primary key, name text, version text);");
+
+          tx.executeSql('create table if not exists t_event_rl (_id integer primary key autoincrement, tmpl_id text, ins_id text, event_name text, is_checked text, data text);');
         });
 
         var inser = function(title, date) {
@@ -146,6 +148,7 @@ angular.module('test', [])
           });
         };
 
+
         var find = function(tx) {
           //db.transaction(function(tx) {
           tx.executeSql("select * from t_event;", [], function(tx, res) {
@@ -165,6 +168,24 @@ angular.module('test', [])
           });
         };
 
+        var insertv = function(params, onSuccess) {
+          var tmpl_id = params.tmpl_id;
+          var ins_id = params.ins_id;
+          var event_name = params.event_name;
+          var is_checked = params.is_checked;
+          var data = params.data;
+
+          db.transaction(function(tx) {
+            tx.executeSql("insert into t_event_rl(tmpl_id, ins_id, event_name, is_checked, data) values(?, ?, ?, ?, ?);", [tmpl_id, ins_id, event_name, is_checked, data], function(tx, res) {
+              console.log("dddd insert " + angular.toJson(tx)
+                          + " res " +angular.toJson(res));
+            }, function(e) {
+              console.log("insert t_event error: " + e.message);
+            });
+          });
+        };
+
+
         var title, date;
         var i = 0;
         // for (var i=0; i<100; i++) {
@@ -173,6 +194,16 @@ angular.module('test', [])
         inser(title, date);
         insertmpl(title, date);
         //}
+
+        var params = {};
+        params.tmpl_id = "5";
+        params.ins_id = "7";
+        params.event_name = "event name ";
+        params.is_checked = "0";
+        params.data = angular.toJson(new Date());
+
+        insertv(params);
+
       }
 
       console.log("-------------sqlite end exec-----------------");
@@ -188,6 +219,7 @@ angular.module('test', [])
         console.log("--------- ngsqlite create table ------");
         $cordovaSQLite.execute(db, "create table if not exists t_event_ng(_id integer primary key, title text, date text);");
         $cordovaSQLite.execute(db, "create table if not exists t_template_ng(_id integer primary key, name text, version text);");
+        $cordovaSQLite.execute(db, 'create table if not exists t_event_rl_ng (_id integer primary key autoincrement, tmpl_id text, ins_id text, event_name text, is_checked text, data text);');
 
         var inser2 = function(title, date) {
           var insql2 = "insert into t_event_ng(title, date) values(?, ?)";
@@ -204,8 +236,31 @@ angular.module('test', [])
           });
         };
 
+        var insertv2 = function(params, onSuccess) {
+          var tmpl_id = params.tmpl_id;
+          var ins_id = params.ins_id;
+          var event_name = params.event_name;
+          var is_checked = params.is_checked;
+          var data = params.data;
+
+          $cordovaSQLite.execute(db, "insert into t_event_rl_ng(tmpl_id, ins_id, event_name, is_checked, data) values(?, ?, ?, ?, ?);", [tmpl_id, ins_id, event_name, is_checked, data]).then(function(res) {
+            console.log("dddd insert res " +angular.toJson(res));
+          }, function(e) {
+            console.log("insert t_event error: " + e.message);
+          });
+        };
+
         console.log("---------- ngsqlite insert date ---------");
         inser2("title 1", angular.toJson(new Date()));
+
+        var params = {};
+        params.tmpl_id = "5";
+        params.ins_id = "7";
+        params.event_name = "event name ";
+        params.is_checked = "0";
+        params.data = angular.toJson(new Date());
+
+        insertv2(params);
 
       }
       console.log("-------------ngsqlite end exec-----------------");
