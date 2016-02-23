@@ -248,6 +248,15 @@ angular.module('starter.services', ['geoposition'])
     };
   })
 
+  .service('UserService', ['$http', function($http) {
+    this.getUsers = function() {
+      return $http.get('https://randomuser.me/api/?result=10').then(function(response) {
+        console.log(angular.toJson(response));
+        return response.data.results;
+      });
+    };
+  }])
+
   .factory('JPushService', ['$http', '$window', '$document', function($http, $window, $document) {
     var jpushServiceFactory = {};
 

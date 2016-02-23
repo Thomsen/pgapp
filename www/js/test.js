@@ -5,6 +5,11 @@ angular.module('test', [])
       $scope.map = map;
     };
   })
+  .controller('BackendController', function($scope, UserService) {
+    UserService.getUsers().then(function(users) {
+      $scope.users = users;
+    });
+  })
   .controller('TestController', function($scope, $state, $cordovaSQLite) {
     $scope.gotest = function () {
       $state.go('patrol'); // ui-sref="root.main" ui-sref-opts="{reload: false}"

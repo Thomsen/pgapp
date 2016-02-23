@@ -59,6 +59,11 @@ angular.module('starter.routes', [])
         url: '/test',
         templateUrl: 'templates/test.html'
       })
+      .state('backend', {
+        url: '/backend',
+        templateUrl: 'templates/backend.html',
+        controller: 'BackendController'
+      })
       .state('map', {
         url: '/map',
         templateUrl: 'templates/map.html'
