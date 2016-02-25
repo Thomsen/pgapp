@@ -1,0 +1,22 @@
+<ion-menu id="leftMenu" [content]="content">
+
+  <ion-toolbar >
+    <ion-title>Projects</ion-title>
+
+    <button clear item-right (click)="newProject()">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+  </ion-toolbar>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item *ngFor="#p of projects; #i = index" (click)="openProject(p)" *ngClass="">
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav id="nav" [root]="rootPage" #content swipe-back-enabled="false"></ion-nav>
