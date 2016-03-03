@@ -5,16 +5,17 @@ import {MainPage} from './pages/main/main';
 
 @App({
   templateUrl: 'build/app.html',
+  providers: [Project],
   config: {
   } // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class PgApp {
-  constructor(@Inject(IonicApp) app, @Inject(Platform) platform) {
+  constructor(@Inject(IonicApp) app, @Inject(Platform) platform, @Inject(Project) project) {
 
     // set up our app
     this.app = app;
     this.platform = platform;
-    //this.project = project;
+    this.project = project;
     this.initializeApp();
 
     // set our app's pages
@@ -54,8 +55,8 @@ class PgApp {
   }
 
   createProject(title) {
-    //var newProject = Project.newProject(projectTitle);
-    console.log(this.platform.versions());
+    var newProject = this.project.newProject(title);
+    //console.log(this.platform.versions());
   }
 
   openProject(project) {

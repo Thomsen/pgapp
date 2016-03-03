@@ -3189,13 +3189,14 @@
 	};
 	var ionic_1 = __webpack_require__(5);
 	var core_1 = __webpack_require__(7);
+	var service_1 = __webpack_require__(358);
 	var main_1 = __webpack_require__(360);
 	var PgApp = (function () {
-	    function PgApp(app, platform) {
+	    function PgApp(app, platform, project) {
 	        // set up our app
 	        this.app = app;
 	        this.platform = platform;
-	        //this.project = project;
+	        this.project = project;
 	        this.initializeApp();
 	        // set our app's pages
 	        this.pages = [
@@ -3230,8 +3231,8 @@
 	        }
 	    };
 	    PgApp.prototype.createProject = function (title) {
-	        //var newProject = Project.newProject(projectTitle);
-	        console.log(this.platform.versions());
+	        var newProject = this.project.newProject(title);
+	        //console.log(this.platform.versions());
 	    };
 	    PgApp.prototype.openProject = function (project) {
 	        // close the menu when clicking a link from the menu
@@ -3243,11 +3244,13 @@
 	    PgApp = __decorate([
 	        ionic_1.App({
 	            templateUrl: 'build/app.html',
+	            providers: [service_1.Project],
 	            config: {} // http://ionicframework.com/docs/v2/api/config/Config/
 	        }),
 	        __param(0, core_1.Inject(ionic_1.IonicApp)),
-	        __param(1, core_1.Inject(ionic_1.Platform)), 
-	        __metadata('design:paramtypes', [Object, Object])
+	        __param(1, core_1.Inject(ionic_1.Platform)),
+	        __param(2, core_1.Inject(service_1.Project)), 
+	        __metadata('design:paramtypes', [Object, Object, Object])
 	    ], PgApp);
 	    return PgApp;
 	})();
@@ -62155,8 +62158,66 @@
 
 
 /***/ },
-/* 358 */,
-/* 359 */,
+/* 358 */
+/***/ function(module, exports, __webpack_require__) {
+
+	function __export(m) {
+	    for (var p in m) {
+	        if (!exports.hasOwnProperty(p)) {
+	            exports[p] = m[p];
+	        }
+	    }
+	}
+	__export(__webpack_require__(359));
+
+
+/***/ },
+/* 359 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(7);
+	// var Project = (function() {
+	//   function Project(projects) {
+	//     if (projects === void 0) {
+	//       projects = [];
+	//     }
+	//     this._projects = projects;
+	//     this._readyPromise = new Promise(function(res) {
+	//       _this._readyResolve = res;
+	//     });
+	//   }
+	//   Project.prototype.newProject = function(title) {
+	//     alert(title);
+	//   };
+	//   return Project;
+	// })();
+	// exports.Project = Project;
+	var Project = (function () {
+	    function Project() {
+	    }
+	    Project.prototype.newProject = function (title) {
+	        alert(title);
+	    };
+	    Project = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [])
+	    ], Project);
+	    return Project;
+	})();
+	exports.Project = Project;
+	;
+
+
+/***/ },
 /* 360 */
 /***/ function(module, exports, __webpack_require__) {
 

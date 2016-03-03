@@ -1,20 +1,33 @@
-var Project = (function() {
-  function Project(projects) {
-    if (projects === void 0) {
-      projects = [];
-    }
+import {Injectable} from 'angular2/core';
 
-    this._projects = projects;
-    this._readyPromise = new Promise(function(res) {
-      _this._readyResolve = res;
-    });
+// var Project = (function() {
+//   function Project(projects) {
+//     if (projects === void 0) {
+//       projects = [];
+//     }
+
+//     this._projects = projects;
+//     this._readyPromise = new Promise(function(res) {
+//       _this._readyResolve = res;
+//     });
+//   }
+
+//   Project.prototype.newProject = function(title) {
+//     alert(title);
+//   };
+
+//   return Project;
+// })();
+// exports.Project = Project;
+
+
+@Injectable()
+export class Project {
+  constructor() {
+
   }
 
-  Project.prototype.newProject = function(title) {
+  newProject(title) {
     alert(title);
-  };
-
-  return Project;
-})();
-
-exports.Project = Project;
+  }
+};
