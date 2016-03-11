@@ -1,11 +1,13 @@
 <ion-menu id="leftMenu" [content]="content">
 
   <ion-toolbar >
-    <ion-title>Projects</ion-title>
+    <ion-title>Project</ion-title>
 
-    <button clear item-right (click)="newProject()">
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons end>
+      <button royal (click)="newProject()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
 
   </ion-toolbar>
 

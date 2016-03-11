@@ -7,4 +7,4 @@ plugins/
 *.log
 .sass-cache
 *#
-www/build
+www/build/

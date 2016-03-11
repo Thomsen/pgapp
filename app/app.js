@@ -10,12 +10,16 @@ import {MainPage} from './pages/main/main';
   } // http://ionicframework.com/docs/v2/api/config/Config/
 })
 class PgApp {
+  pgApp: PaApp;  // self not repeat define
   constructor(@Inject(IonicApp) app, @Inject(Platform) platform, @Inject(Project) project) {
+
+    pgApp = this;
 
     // set up our app
     this.app = app;
     this.platform = platform;
     this.project = project;
+
     this.initializeApp();
 
     // set our app's pages
@@ -25,6 +29,11 @@ class PgApp {
 
     // make *Page the root (or first) page
     this.rootPage = MainPage;
+
+    this.project.findProjects().then((res) =>
+                                     if (res) {
+                                       pgApp.projects = JSON.parse(res);
+                                     });
   }
 
   initializeApp() {
@@ -44,6 +53,14 @@ class PgApp {
       if (window.StatusBar) {
         window.StatusBar.styleDefault();
       }
+
+      // html5 native storage
+      if (!window.indexedDB) {
+        window.alert("doesn't support indexeddb");
+      } else {
+        console.log("support indexedDB");
+      }
+
     });
   }
 
@@ -55,8 +72,13 @@ class PgApp {
   }
 
   createProject(title) {
-    var newProject = this.project.newProject(title);
     //console.log(this.platform.versions());
+
+    this.project.newProject(title).then(function(res) {
+      pgApp.projects = res;
+    }, function(error) {
+      console.log('create project ' + error);
+    });
   }
 
   openProject(project) {
