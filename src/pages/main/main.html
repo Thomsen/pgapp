@@ -1,0 +1,16 @@
+<!-- <ion-header> -->
+<!--   <ion-navbar> -->
+<!--     <button ion-button menuToggle> -->
+<!--       <ion-icon name="menu"></ion-icon> -->
+<!--     </button> -->
+<!--     <ion-title>{{title}}</ion-title> <!-- title childview set --> -->
+<!--   </ion-navbar> -->
+<!-- </ion-header> -->
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab tabIcon="home" tabTitle="Task" [root]="tabHome"></ion-tab>
+    <ion-tab tabIcon="more" tabTitle="History" [root]="tabHistory"></ion-tab>
+    <ion-tab tabIcon="more" tabTitle="More" [root]="tabMore"></ion-tab>
+  </ion-tabs>
+</ion-content>

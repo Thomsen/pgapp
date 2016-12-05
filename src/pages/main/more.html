@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>More</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <button ion-item (click)="openPage(amapPage)">amap</button>
+  <button ion-item (click)="openPage(nativePage)">native</button>
+  <button ion-item (click)="openPage(directivePage)">directive</button>
+  <button ion-item (click)="openPage(formPage)">form</button>
+
+  <!-- <ion-tab [root]="amapPage" tabTitle="Amap"></ion-tab> -->
+  <!-- <ion-tab [root]="nativePage" tabTitle="Native"></ion-tab> -->
+  <!-- <ion-tab [root]="directivePage" tabTitle="Directive"></ion-tab> -->
+
+</ion-content>
+
+<!-- <ion-nav id="moreNav" #content [root]="morePage"></ion-nav> -->

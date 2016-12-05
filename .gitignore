@@ -6,5 +6,6 @@ platforms/
 plugins/
 *.log
 .sass-cache
+.tmp
 *#
 www/build/
