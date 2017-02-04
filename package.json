@@ -2,32 +2,35 @@
   "name": "pgapp",
   "version": "2.0.0",
   "description": "pgapp: An Ionic 2 project",
+  "private": true,
   "scripts": {
-    "build": "ionic-app-scripts build",
-    "watch": "ionic-app-scripts watch",
+    "build": "node_modules/.bin/ionic-app-scripts build",
+    "watch": "node_modules/.bin/ionic-app-scripts watch",
+    "serve": "node_modules/.bin/ionic-app-scripts serve",
+    "clean": "node_modules/.bin/ionic-app-scripts clean",
     "serve:before": "watch",
     "emulate:before": "build",
     "deploy:before": "build",
     "build:before": "build",
-    "run:before": "build",
-    "android": "./node_modules/.bin/ionic run android"
+    "run:before": "build"
   },
   "dependencies": {
-    "@angular/common": "2.1.1",
-    "@angular/compiler": "2.1.1",
-    "@angular/compiler-cli": "2.1.1",
-    "@angular/core": "2.1.1",
-    "@angular/forms": "2.1.1",
-    "@angular/http": "2.1.1",
-    "@angular/platform-browser": "2.1.1",
-    "@angular/platform-browser-dynamic": "2.1.1",
-    "@angular/platform-server": "2.1.1",
-    "@ionic/storage": "1.1.6",
-    "ionic-angular": "2.0.0-rc.2",
-    "ionic-native": "2.2.3",
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/compiler-cli": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-server": "2.2.1",
+    "@ionic/storage": "1.1.7",
+    "ionic-angular": "2.0.0",
+    "ionic-native": "2.4.1",
     "ionicons": "3.0.0",
     "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.21"
+    "zone.js": "0.6.26",
+    "sw-toolbox": "3.4.0"
   },
   "devDependencies": {
     "awesome-typescript-loader": "0.15.10",
@@ -46,8 +49,8 @@
     "karma-jasmine": "~0.2.2",
     "shelljs": "^0.3.0",
     "strip-sourcemap-loader": "0.0.1",
-    "@ionic/app-scripts": "0.0.39",
-    "typescript": "2.0.6"
+    "@ionic/app-scripts": "1.0.0",
+    "typescript": "2.0.9"
   },
   "cordovaPlugins": [
     "cordova-plugin-device",
@@ -71,11 +74,6 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
-    "android",
-    {
-      "platform": "android",
-      "version": "",
-      "locator": "android"
-    }
+    "android"
   ]
 }
