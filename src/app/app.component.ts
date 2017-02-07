@@ -23,7 +23,7 @@ export class PgApp {
 
   projects: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, public project: Project) {
+  constructor(public platform: Platform, private project: Project) {
 
     //pgApp = this;
 
@@ -44,6 +44,7 @@ export class PgApp {
     this.project.findProjects().then((res) => {
       if (res) {
         this.projects = JSON.parse(res);
+        //alert(JSON.stringify(this.projects));
       }
     });
   }
@@ -84,12 +85,14 @@ export class PgApp {
   }
 
   createProject(title) {
-    //console.log(this.platform.versions());
-
-    this.project.newProject(title).then(function (res) {
-      this.projects = res;
+    var self = this;
+    this.project.newProject(title).then(function (res: Array<any>) {
+      self.projects = res;  // this is null
+      //alert(JSON.stringify(self.projects));
     }, function (error) {
-      console.log('create project ' + error);
+      console.log('create project error ' + JSON.stringify(error));
+    }).catch(function (error) {
+      console.log('create project catch: ' + JSON.stringify(error));
     });
   }
 

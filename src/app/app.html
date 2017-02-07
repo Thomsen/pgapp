@@ -1,17 +1,15 @@
 <ion-menu id="leftMenu" [content]="content">
 
-  <ion-toolbar >
-    <ion-title>Project</ion-title>
-
-    <ion-buttons end>
-      <button royal (click)="newProject()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-buttons>
-
-  </ion-toolbar>
-
   <ion-content>
+    <ion-toolbar>
+      <ion-title>Project</ion-title>
+      <ion-buttons end>
+        <button royal (click)="newProject()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+
     <ion-list>
       <button menuClose ion-item *ngFor="let p of projects; let i = index" (click)="openProject(p)" >
         {{p.title}}

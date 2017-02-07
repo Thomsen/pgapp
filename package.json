@@ -60,6 +60,7 @@
     "cordova-plugin-splashscreen",
     "com.chariotsolutions.toast.plugin",
     "com.msopentech.indexedDB",
+    "cordova-plugin-nativestorage",
     "cordova-pgapp-plugin",
     {
       "locator": "https://github.com/phonegap-build/PushPlugin.git",

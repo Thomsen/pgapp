@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NativeStorage } from 'ionic-native'
+import { NativeStorage } from 'ionic-native'  // cordova-plugin-nativesttorage
 
 import { Observable } from 'rxjs/Rx';
 
@@ -14,7 +14,7 @@ export class Project {
 
   newProject(title) {
     let promise = new Promise(function (resolve, reject) {
-      this.findProjects().then(function (res) {
+      NativeStorage.getItem('project').then(function (res) {  // invoke findProjects() undefined
         var projs;
         if (res) {
           //projs = res.parseJSON();
@@ -22,22 +22,31 @@ export class Project {
         } else {
           projs = [];
         }
-        var p: any;
+        var p: any = {};
         p.title = title;
         projs.push(p);
-        this.saveProjects(projs).then(function () {
+        NativeStorage.setItem('project', JSON.stringify(projs)).then(function () {
           resolve(projs);
         });
       }, function (error) {
-        console.log('save ' + error);
-      }).catch(function onRejected(error) {
-        console.log('catch ' + error);
+        console.log('save error ' + JSON.stringify(error));
+        if (error.code === 2) {
+          var projs: Array<any> = [];
+          var p: any = {};  // undefined, need = {}
+          p.title = title;
+          projs.push(p);
+          NativeStorage.setItem('project', JSON.stringify(projs)).then(function () {
+            resolve(p);
+          });
+        }
+      }).catch(function(error) {
+        console.log('catch error ' + JSON.stringify(error));
       });
     });
     return promise;
   }
 
-  findProjects() {
+  public findProjects(): Promise<any> {
     return NativeStorage.getItem('project');
   }
 
