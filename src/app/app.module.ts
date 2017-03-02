@@ -14,6 +14,9 @@ import { NativePage } from '../pages/native/native';
 
 import { FormPage } from '../pages/form/form';
 
+import { DemoPage } from '../pages/demo/demo';
+import { BadgePage } from '../pages/demo/badges';
+
 @NgModule({
   declarations: [
     PgApp,
@@ -23,7 +26,9 @@ import { FormPage } from '../pages/form/form';
     TaskPage,
     AmapPage,
     NativePage,
-    FormPage
+    FormPage,
+    DemoPage,
+    BadgePage
   ],
   imports: [
     IonicModule.forRoot(PgApp, {
@@ -40,7 +45,9 @@ import { FormPage } from '../pages/form/form';
     TaskPage,
     AmapPage,
     NativePage,
-    FormPage
+    FormPage,
+    DemoPage,
+    BadgePage
   ],
   providers: []
 })

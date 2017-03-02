@@ -8,6 +8,8 @@ import { FormPage } from '../form/form';
 
 //import {DirectivePage} from '../directive/directive';
 
+import { DemoPage } from '../demo/demo';
+
 @Component({
   templateUrl: 'more.html'
 })
@@ -19,6 +21,7 @@ export class MorePage {
   nativePage: any = NativePage;
   directivePage: any = NativePage;
   formPage: any = FormPage;
+  demoPage: any = DemoPage;
 
   constructor(public navCtrl: NavController, public viewCtrl: ViewController, public appCtrl: App) {
 
