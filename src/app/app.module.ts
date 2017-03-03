@@ -16,6 +16,8 @@ import { FormPage } from '../pages/form/form';
 
 import { DemoPage } from '../pages/demo/demo';
 import { BadgePage } from '../pages/demo/badges';
+import { ScrollPage } from '../pages/scroll/scroll';
+import { VirtualScrollPage } from '../pages/scroll/virtual-scroll/virtual-scroll';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { BadgePage } from '../pages/demo/badges';
     NativePage,
     FormPage,
     DemoPage,
-    BadgePage
+    BadgePage,
+    ScrollPage,
+    VirtualScrollPage
   ],
   imports: [
     IonicModule.forRoot(PgApp, {
@@ -47,7 +51,9 @@ import { BadgePage } from '../pages/demo/badges';
     NativePage,
     FormPage,
     DemoPage,
-    BadgePage
+    BadgePage,
+    ScrollPage,
+    VirtualScrollPage
   ],
   providers: []
 })
