@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 
 import { PgApp } from './app.component';
@@ -19,6 +19,8 @@ import { BadgePage } from '../pages/demo/badges';
 import { ScrollPage } from '../pages/scroll/scroll';
 import { VirtualScrollPage } from '../pages/scroll/virtual-scroll/virtual-scroll';
 
+import { GlobalIonicErrorHandler } from '../providers/global-ionic-error-handler';
+
 @NgModule({
   declarations: [
     PgApp,
@@ -37,7 +39,17 @@ import { VirtualScrollPage } from '../pages/scroll/virtual-scroll/virtual-scroll
   imports: [
     IonicModule.forRoot(PgApp, {
       modalEnter: 'modal-slide-in',
-      modalLeave: 'modal-slide-out'
+      modalLeave: 'modal-slide-out',
+      backButtonText: 'go back',
+      icoMode: 'ios',
+      tabsPlacement: 'bottom',
+      pageTransition: 'ios',
+      platforms: {
+        ios: {
+          tabsPlacement: 'top'
+        }
+      },
+      links: []
     }, {})
   ],
   bootstrap: [IonicApp],
@@ -55,6 +67,8 @@ import { VirtualScrollPage } from '../pages/scroll/virtual-scroll/virtual-scroll
     ScrollPage,
     VirtualScrollPage
   ],
-  providers: []
+  providers: [
+    {provide: ErrorHandler, useClass: GlobalIonicErrorHandler }
+  ]
 })
 export class AppModule { }

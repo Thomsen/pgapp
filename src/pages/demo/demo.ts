@@ -10,6 +10,9 @@ import {BadgePage} from './badges';
 })
 
 export class DemoPage {
+
+  person: any;
+
   constructor(
     public navCtrl: NavController,
     public modalCtrl: ModalController,
@@ -17,7 +20,20 @@ export class DemoPage {
     public actionsheetCtrl: ActionSheetController,
     public alertCtrl: AlertController
     //public badgePage: BadgePage
-  ) { }
+  ) {
+    this.person = {
+      name: 'thom',
+      age: 18
+    }
+  }
+
+  ionViewDidLoad() {
+    try {
+      throw new Error('demo error');
+    } catch (error) {
+      console.log('demo error: ' + error);
+    }
+  }
 
   badgePage: any = BadgePage;
 
