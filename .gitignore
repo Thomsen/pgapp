@@ -8,5 +8,7 @@ plugins/
 .sass-cache
 .tmp
 *#
-www/build/
 .vs
+pgapp.jsproj.user
+www
+bin
