@@ -9,7 +9,12 @@
     "serve": "node_modules/.bin/ionic-app-scripts serve",
     "clean": "node_modules/.bin/ionic-app-scripts clean",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "server:before": "watch",
+    "build:before": "watch",
+    "deploy:before": "build",
+    "emulator:before": "build",
+    "run:before": "build"
   },
   "dependencies": {
     "@angular/common": "2.2.1",

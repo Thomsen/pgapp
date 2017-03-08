@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import {ItemsProvider} from '../../providers/items-provider';
+import { ItemsProvider } from '../../providers/items-provider';
 
 /*
   Generated class for the Scroll page.

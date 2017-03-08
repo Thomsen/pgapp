@@ -18,6 +18,8 @@ import { DemoPage } from '../pages/demo/demo';
 import { BadgePage } from '../pages/demo/badges';
 import { ScrollPage } from '../pages/scroll/scroll';
 import { VirtualScrollPage } from '../pages/scroll/virtual-scroll/virtual-scroll';
+import { WeatherPage } from '../pages/weather/weather';
+import { ForecastDetailPage } from '../pages/weather/forecast-detail/forecast-detail';
 
 import { GlobalIonicErrorHandler } from '../providers/global-ionic-error-handler';
 
@@ -34,7 +36,9 @@ import { GlobalIonicErrorHandler } from '../providers/global-ionic-error-handler
     DemoPage,
     BadgePage,
     ScrollPage,
-    VirtualScrollPage
+    VirtualScrollPage,
+    WeatherPage,
+    ForecastDetailPage
   ],
   imports: [
     IonicModule.forRoot(PgApp, {
@@ -65,7 +69,9 @@ import { GlobalIonicErrorHandler } from '../providers/global-ionic-error-handler
     DemoPage,
     BadgePage,
     ScrollPage,
-    VirtualScrollPage
+    VirtualScrollPage,
+    WeatherPage,
+    ForecastDetailPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: GlobalIonicErrorHandler }

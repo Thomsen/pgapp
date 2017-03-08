@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 
 import { NavController, ModalController, Platform, ActionSheetController, AlertController } from 'ionic-angular';
 
-import {BadgePage} from './badges';
+import { BadgePage } from './badges';
 
 @Component({
   templateUrl: 'demo.html'
