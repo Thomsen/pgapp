@@ -1,0 +1,55 @@
+﻿{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "version": "0.0.2",
+    "name": "pgapp-ionic2-tdd"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets"
+      ],
+      "index": "index.html",
+      "main": "app/main.ts",
+      "test": "test/test.ts",
+      "polyfills":  "test/polyfills.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsConfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "scripts": [ ],
+      "environmentSource": "environment/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+   "e2e": {
+    "protractor": {
+      "config": "src/test/protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "src/test/e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "css",
+    "component": {}
+  }
+
+}

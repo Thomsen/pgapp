@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Hero } from './hero';
 
 @Component({
-  moduleId: '1234',
+  //moduleId: '1234',
   selector: 'hero-form',
   templateUrl: 'form.html'
 })
@@ -14,6 +14,6 @@ export class FormPage {
   submitted = false;
   onSubmit() { this.submitted = true; }
   newHero() {
-    this.model = new Hero(42, '', '');
+    this.model = new Hero(42, '', '', '');
   }
 }
