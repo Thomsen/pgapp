@@ -4,17 +4,11 @@
   "description": "pgapp: An Ionic 2 project",
   "private": true,
   "scripts": {
-    "build": "node_modules/.bin/ionic-app-scripts build",
-    "watch": "node_modules/.bin/ionic-app-scripts watch",
-    "serve": "node_modules/.bin/ionic-app-scripts serve",
-    "clean": "node_modules/.bin/ionic-app-scripts clean",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "server:before": "watch",
-    "build:before": "watch",
-    "deploy:before": "build",
-    "emulator:before": "build",
-    "run:before": "build",
+    "server:before": "ionic:serve",
+    "build:before": "ionic:build",
+    "run:before": "ionic:build",
     "test": "ng test"
   },
   "dependencies": {
@@ -85,5 +79,10 @@
     "ProjectOpened": [
       "ionic:build"
     ]
+  },
+  "config": {
+    "ionic_bundler": "rollup",
+    "ionic_source_map_type": "source-map",
+    "ionic_cleancss": "./config/cleancss.config.js"
   }
 }
