@@ -12,6 +12,12 @@ import { NavController } from 'ionic-angular';
 export class TaskPage {
   @ViewChild(Nav) nav: Nav;
 
+  title: string = 'Home';
+
   constructor() {
   };
+
+  changeTitle(title) {
+    this.title = title;
+  }
 }
