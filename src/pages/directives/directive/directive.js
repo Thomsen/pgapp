@@ -1,4 +1,4 @@
-import {Accordion} '../../directives/accordion';
+import {Accordion} '../directives/accordion';
 
 @Component ({
   selector: 'my-directive',

@@ -1,18 +1,18 @@
-//import {App, IonicApp, Platform} from 'ionic-framework/ionic';
-//import {Inject} from 'angular2/core';
 
 import { Component, ViewChild, Inject } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Project } from './service/project';
 import { MainPage } from '../pages/main/main';
+
+import { Project } from '../providers/project';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [Project],
-  // config: {
-  // } // http://ionicframework.com/docs/v2/api/config/Config/
+  providers: [Platform, Project],
+  config: {
+     // http://ionicframework.com/docs/v2/api/config/Config/
+  }
 })
 
 export class PgApp {
@@ -30,6 +30,7 @@ export class PgApp {
     // set up our app
     this.platform = platform;
     this.project = project;
+    this.project.title = "component";
 
     this.initializeApp();
 
@@ -69,9 +70,9 @@ export class PgApp {
 
       // html5 native storage
       if (!window.indexedDB) {
-        window.alert("doesn't support indexeddb");
+        window.alert("doesn't support IndexedDB");
       } else {
-        console.log("support indexedDB");
+        console.log("support IndexedDB");
       }
 
     });

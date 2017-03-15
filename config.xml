@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.anyuaning.pgapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>pgapp</name>
-  <description>
-        An Ionic Framework and Cordova project.
+  <description>
+
+        An Ionic Framework and Cordova project.
+
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="hi@ionicframework" href="http://ionicframework.com/">
+
+      Ionic Framework Team
+
   </author>
   <content src="index.html" />
   <access origin="*" />
@@ -68,6 +72,5 @@
   <plugin name="cordova-plugin-toast" version="1.0.1" />
   <plugin name="cordova-plugin-whitelist" version="1.2.1" />
   <plugin name="cordova-sqlite-storage" version="2.0.2" />
-  <plugin name="io.litehelpers.cordova.sqlite" version="0.7.10" />
   <plugin name="ionic-plugin-keyboard" version="1.0.8" />
 </widget>
