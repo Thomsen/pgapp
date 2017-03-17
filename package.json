@@ -6,7 +6,7 @@
   "scripts": {
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "server:before": "ionic:serve",
+    "serve:before": "ionic:serve",
     "build:before": "ionic:build",
     "run:before": "ionic:build",
     "test": "ng test"
@@ -27,11 +27,12 @@
     "ionic-native": "2.8.0",
     "ionicons": "3.0.0",
     "rxjs": "5.0.1",
-    "zone.js": "0.7.2"
+    "zone.js": "0.7.2",
+    "sw-toolbox": "3.6.0"
   },
   "devDependencies": {
     "@angular/cli": "^1.0.0-rc.1",
-    "@ionic/app-scripts": "1.0.0",
+    "@ionic/app-scripts": "^1.0.0",
     "@types/jasmine": "^2.5.43",
     "@types/node": "^7.0.7",
     "codecov": "^1.0.1",
@@ -79,10 +80,5 @@
     "ProjectOpened": [
       "ionic:build"
     ]
-  },
-  "config": {
-    "ionic_bundler": "rollup",
-    "ionic_source_map_type": "source-map",
-    "ionic_cleancss": "./config/cleancss.config.js"
   }
 }

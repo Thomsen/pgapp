@@ -1,6 +1,6 @@
 ﻿
 import { TestBed, ComponentFixture, async, inject } from '@angular/core/testing';
-import { IonicMoudle } from 'ionic-angular';
+import { IonicMoudle, Platform } from 'ionic-angular';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { PgApp } from '../../app/app.component';
@@ -28,6 +28,7 @@ describe('PgApp Component', () => {
     TestBed.configureTestingModule({
       declarations: [PgApp],
       providers: [
+        Platform,
         { provide: Project, useValue: projectStub }  // don't provide the real service. provide a test-double instead
       ],
       schemas: [NO_ERRORS_SCHEMA] // Can't bind to 'content' since it isn't a known property of 'ion-menu

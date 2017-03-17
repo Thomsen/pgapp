@@ -9,10 +9,7 @@ import { Project } from '../providers/project';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [Platform, Project],
-  config: {
-     // http://ionicframework.com/docs/v2/api/config/Config/
-  }
+  providers: [Project]
 })
 
 export class PgApp {
