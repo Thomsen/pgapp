@@ -3,5 +3,10 @@
   latitude:  {{ coords.latitude }}
 
   <button (click)="coord()">coord</button>
+  <button (click)="capture()">capture</button>
+
+  <div>
+    <img [src]="base64Img" *ngIf="base64Img" />
+  </div>
 
 </ion-content>

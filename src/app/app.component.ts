@@ -1,5 +1,5 @@
 
-import { Component, ViewChild, Inject } from '@angular/core';
+import { Component, ViewChild, Inject, enableProdMode } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
@@ -28,6 +28,10 @@ export class PgApp {
     this.platform = platform;
     this.project = project;
     this.project.title = "component";
+
+    // if (this.platform.is('ios') || this.platform.is('android')) {
+    //enableProdMode();  //  Cannot enable prod mode after platform setup.
+    // }
 
     this.initializeApp();
 

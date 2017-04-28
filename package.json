@@ -9,6 +9,9 @@
     "serve:before": "ionic:serve",
     "build:before": "ionic:build",
     "run:before": "ionic:build",
+    "upload:before": "ionic:build",
+    "emulate:before": "ionic:build",
+    "deploy:before": "ionic:build",
     "test": "ng test"
   },
   "dependencies": {
@@ -22,13 +25,15 @@
     "@angular/platform-browser-dynamic": "2.4.8",
     "@angular/platform-server": "2.4.8",
     "@angular/router": "3.4.8",
+    "@ionic-native/camera": "^3.4.4",
+    "@ionic-native/core": "^3.4.4",
     "@ionic/storage": "1.1.7",
     "ionic-angular": "2.2.0",
     "ionic-native": "2.8.0",
     "ionicons": "3.0.0",
     "rxjs": "5.0.1",
-    "zone.js": "0.7.2",
-    "sw-toolbox": "3.6.0"
+    "sw-toolbox": "3.6.0",
+    "zone.js": "0.7.2"
   },
   "devDependencies": {
     "@angular/cli": "^1.0.0-rc.1",
