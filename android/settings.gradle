@@ -1,0 +1,3 @@
+rootProject.name = 'pgapp'
+
+include ':app'
